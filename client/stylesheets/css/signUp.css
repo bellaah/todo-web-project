@@ -114,3 +114,62 @@ pre {
     white-space: pre-wrap;
     word-break:break-all;
 }
+
+#backgound_div {
+    position: fixed;
+    background-color: #495057;
+    opacity: 0.5;
+    left: 0;
+    top: 0;
+}
+
+#layer_text {
+    height: 7rem;
+    margin: 1rem 0;
+    padding: 0.5rem;;
+    overflow:scroll; 
+    text-align: initial;
+    background-color: white;
+    border:  solid 1px #dadada;
+    font-size: 0.8rem;
+}
+
+.register_form > .pop_layer {
+    padding: 1rem 2rem;
+    overflow-y: scroll;
+    position: fixed;
+    text-align:center;
+    z-index:999;
+    display:none; 
+    width:30rem; 
+    height:fit-content;
+    background: #f5f6f7;
+    border: solid 1px #868e96;
+}
+
+#layer_exit_btn {
+    width: fit-content;
+    padding: 0.3rem;
+    right: 0;
+    align-self: flex-end;
+    border: none;
+    background-color: #f5f6f7;
+}
+
+.layer_green_btn {
+    background-color:  #232f3e;
+    padding: 0.5rem 2rem;
+    align-self: center;
+    color: white;
+    border: none;
+    margin: 0 0.2rem;
+}
+
+#layer_exit_b {
+    font-size: 1rem;
+}
+
+#layer_head {
+    align-self: baseline;
+    font-weight: 700;
+}

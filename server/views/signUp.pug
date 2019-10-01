@@ -35,10 +35,18 @@ head
     .green_btn
       input(type='button' onclick='resetLayer()' value='초기화')
       input(type='button' value='가입하기' onclick='checkAll()')
+      
+    .pop_layer
+      button#layer_exit_btn(type='button' onclick='closeLayer()')
+        b#layer_exit_b X
+      b#layer_head
+      pre#layer_text(onscroll='scrolled(this)').
+      #layer_btn
+    #backgound_div
   footer#register_footer
     div
       p &copy; heessun
 script(src='https://unpkg.com/axios/dist/axios.min.js')
-script(type='text/javascript' src='/client/src/utils/util.js')
-script(type='text/javascript' src='/client/src/utils/signUpInputCheck.js')
-script(type='text/javascript' src='/client/src/utils/layer.js')
+script(type='text/javascript' src='/src/utils/util.js')
+script(type='text/javascript' src='/src/utils/signUpInputCheck.js')
+script(type='text/javascript' src='/src/utils/layer.js')
