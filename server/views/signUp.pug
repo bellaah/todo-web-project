@@ -1,0 +1,44 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  style
+    include ../../client/stylesheets/css/reset.css
+    include ../../client/stylesheets/css/signUp.css
+#register
+  header.header
+    h2#register_text &#xD68C;&#xC6D0;&#xAC00;&#xC785;
+  form.register_form(method='post' action='/submitSignup')
+    .text_input
+      label(for='name_input')
+        | &#xC774;&#xB984;
+        br
+      input#name_input(type='text' name='name')
+      span#name_check.red_text
+    .text_input
+      label(for='id_input')
+        | &#xC544;&#xC774;&#xB514;
+        br
+      input#id_input(type='text' name='id')
+      span#id_check.red_text
+    .text_input
+      label(for='pwd_input')
+        | &#xBE44;&#xBC00;&#xBC88;&#xD638;
+        br
+      input#pwd_input(type='password' name='password')
+      span#pwd_check.red_text
+    .text_input
+      label(for='pwd_confirm_Input')
+        | &#xBE44;&#xBC00;&#xBC88;&#xD638; &#xC7AC;&#xD655;&#xC778;
+        br
+      input#pwd_confirm_input(type='password' name='pwd_confirm')
+      span#pwd_confirm_check.red_text
+    .green_btn
+      input(type='button' onclick='resetLayer()' value='초기화')
+      input(type='button' value='가입하기' onclick='checkAll()')
+  footer#register_footer
+    div
+      p &copy; heessun
+script(src='https://unpkg.com/axios/dist/axios.min.js')
+script(type='text/javascript' src='/client/src/utils/util.js')
+script(type='text/javascript' src='/client/src/utils/signUpInputCheck.js')
+script(type='text/javascript' src='/client/src/utils/layer.js')

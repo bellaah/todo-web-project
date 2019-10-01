@@ -1,0 +1,54 @@
+#login {
+    position: relative;
+    display: flex;
+    margin-top: 20rem;
+    align-self: center;
+    flex-direction: column;
+    align-items :center;
+    font-family: Dotum,'돋움',Helvetica,sans-serif;
+}
+
+#login_btn_div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#login_btn_div > button{
+    border-radius: 0;
+    width: 49%;
+    background-color: #232f3e;
+    color: white;
+}
+
+#login_head {
+    color: #232f3e;
+    text-align: center;
+    margin: 0 0 1rem 0;
+}
+
+.form-signin > input {
+    border-radius: 0;
+    margin-bottom: 0.8rem;
+    height: 4rem;
+}
+
+.btn-block+.btn-block {
+    margin-top: 0;
+}
+
+.form-control {
+    height: 3rem;
+}
+
+.form-signin {
+    width: 40rem;
+    border: solid 1px #dadada;
+    padding: 2rem;
+}
+
+#red_text {
+    display: none;
+    color: red;
+}
+

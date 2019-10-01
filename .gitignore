@@ -1,0 +1,5 @@
+node_modules
+server/routes/db.js
+.DS_Store
+package-lock.json
+dump.rdb
