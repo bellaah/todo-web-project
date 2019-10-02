@@ -17,7 +17,7 @@ router.get('/authority', (req, res, next) => {
       }else{
         res.redirect('/');
       }
-  });
+  }); 
 
 router.post('/submit', async(req, res, next) => {
     let isUser = await user.getUser(req.body.id,req.body.password);
