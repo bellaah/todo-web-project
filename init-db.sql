@@ -89,6 +89,11 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+
+-- -----------------------------------------------------
+-- 외래키 지정
+-- -----------------------------------------------------
+
 ALTER TABLE `todo`.`BOARD` 
 ADD FOREIGN KEY (`USER_ID`)
   REFERENCES `todo`.`USER` (`ID`)
@@ -122,3 +127,10 @@ ADD FOREIGN KEY (`BOARD_ID`)
   REFERENCES `todo`.`BOARD` (`BOARD_ID`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION;
+
+
+  -- -----------------------------------------------------
+-- 데이터 
+-- -----------------------------------------------------
+INSERT INTO USER VALUES ("bella","bella","1111");
+INSERT INTO USER VALUES ("heesun","heesun","1111");

@@ -7,5 +7,8 @@
 - [x] database join 공부
 
 ## day2
+- [x] database table 생성
+- [x] 로그인, 회원가입 UI
+- [x] 디렉토리 구조 변경
 
 
