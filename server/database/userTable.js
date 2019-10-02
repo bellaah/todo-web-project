@@ -1,4 +1,5 @@
 const pool = require('./db');
+const userModel = require('../models/users');
 
 const getAllUsers = async() => {
     let query = `SELECT * FROM USER`;
@@ -7,7 +8,8 @@ const getAllUsers = async() => {
     if (rows.length === 0){
         return false;
     }
-    return await rows;
+    let userList = await rows.map((row) => userModel(row));
+    return userList;
 };
 
 const insertUserData = async(userId,userName,userPwd) => {
@@ -25,6 +27,13 @@ const getUser = async(userId,userPwd) => {
     return true;
 };
 
+const updateAuth = async(userList) => {
+    userList.forEach(elem => {
+        pool.query(`UPDATE USER SET AUTHORITY = ${elem.admin} WHERE ID = "${elem.id}"`);
+    });
+    return;
+};
+
 
 
 
@@ -33,5 +42,5 @@ const getUser = async(userId,userPwd) => {
 
 module.exports = { 
     getAllUsers,insertUserData,
-    getUser
+    getUser,updateAuth
 };

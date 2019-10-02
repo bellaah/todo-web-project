@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const user = require('../models/userTable');
+const user = require('../database/userTable');
 
 router.get('/', (req, res, next) => {
   res.redirect('/');

@@ -1,0 +1,29 @@
+body,header,ol{
+    margin: 0;
+    font-family: 'Amazon Ember', Tahoma, Arial, sans-serif;
+}
+
+ol{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    position: relative;
+}
+
+a{
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+button,button:focus,button:active{
+    outline: 0;
+}
+
+button:hover{
+    cursor: pointer;
+}

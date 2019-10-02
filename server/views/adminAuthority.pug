@@ -1,0 +1,25 @@
+doctype html
+head
+style
+    include ../../client/stylesheets/css/reset1.css
+    include ../../client/stylesheets/css/admin.css
+title bella-amazon
+header
+  .amazon-logo
+nav
+  ul
+    li
+      a(href='/admin') ITEM
+    li
+      a(href='/admin/authority') USERS
+section
+  p  USER 
+  table
+    thead
+        tr
+        th ID
+        th NAME
+        th ADMIN
+    tbody.user-table
+  button.save-btn 저장
+script(type='module' src='/src/components/adminUser.js')
