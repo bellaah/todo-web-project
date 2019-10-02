@@ -1,5 +1,6 @@
 const pool = require('./db');
 const userModel = require('../models/users');
+const crypto = require('crypto');
 
 const getAllUsers = async() => {
     let query = `SELECT * FROM USER`;
@@ -13,18 +14,20 @@ const getAllUsers = async() => {
 };
 
 const insertUserData = async(userId,userName,userPwd) => {
+    userPwd = crypto.createHash('sha512').update(userPwd).digest('base64');
     let query = `INSERT INTO USER VALUES ("${userId}","${userName}","${userPwd}")`;
     await pool.query(query);
     return;
 };
 
 const getUser = async(userId,userPwd) => {
-    let query = `SELECT ID FROM USER WHERE ID="${userId}" AND PASSWORD="${userPwd}"`;
+    userPwd = crypto.createHash('sha512').update(userPwd).digest('base64');
+    let query = `SELECT * FROM USER WHERE ID="${userId}" AND PASSWORD="${userPwd}"`;
     let [rows] = await pool.query(query);
     if (rows.length === 0){
         return false;
     }
-    return true;
+    return userModel(rows[0]);
 };
 
 const updateAuth = async(userList) => {

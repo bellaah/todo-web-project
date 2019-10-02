@@ -132,8 +132,9 @@ ADD FOREIGN KEY (`BOARD_ID`)
   ON UPDATE CASCADE;
 
 
-  -- -----------------------------------------------------
+-- -----------------------------------------------------
 -- 데이터 
 -- -----------------------------------------------------
-INSERT INTO USER VALUES ("bella","bella","1111",99);
-INSERT INTO USER VALUES ("heesun","heesun","1111",10);
+-- password: 1111
+INSERT INTO USER VALUES ("bella","bella","MydaiqSOqRi9U6kYGql18Vqw0GRTmPWRigBtCGdcHLJ9XGRdvQhO7lbmdeJbpAGfLs6jfKnimVtJ/LEsCWoDLg==",99); 
+INSERT INTO USER VALUES ("heesun","heesun","MydaiqSOqRi9U6kYGql18Vqw0GRTmPWRigBtCGdcHLJ9XGRdvQhO7lbmdeJbpAGfLs6jfKnimVtJ/LEsCWoDLg==",10);
