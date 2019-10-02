@@ -4,8 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
-var signUpRouter = require('./server/routes/signUp');
 var indexRouter = require('./server/routes/index');
+var signUpRouter = require('./server/routes/signUp');
+var signInRouter = require('./server/routes/signIn');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 app.use('/', indexRouter);
 app.use('/signUp', signUpRouter);
+app.use('/signIn', signInRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

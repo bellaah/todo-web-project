@@ -5,21 +5,13 @@ const isUser = () => {
 
     axios({
         method: 'post',
-        url: '/user/signIn',
+        url: '/signIn/submit',
         data: {
           id: idInput.value,
           password: pwdInput.value
         }
     }).then(res => {
         if(res.data){
-            errorMsg.style.display = 'none';
-            axios({
-                method: 'post',
-                url: '/insertSession',
-                data: {
-                  id : idInput.value
-                }
-            });
             window.location.href = '/';
         }else{
             errorMsg.style.display = 'inline';
