@@ -8,8 +8,14 @@ var indexRouter = require('./server/routes/index');
 var signUpRouter = require('./server/routes/signUp');
 var signInRouter = require('./server/routes/signIn');
 var adminRouter = require('./server/routes/admin');
-
 var app = express();
+
+const passport = require('./server/middlewares/passport');
+var session = require('express-session');
+var redis = require('redis');
+var redisStore = require('connect-redis')(session);
+
+var client = redis.createClient(6379,'localhost');
 
 // view engine setup
 app.set('views', path.join(__dirname, '/server/views'));
@@ -28,6 +34,24 @@ app.use(sassMiddleware({
   outputStyle: 'compressed',
   prefix: '/style',
 }));
+
+app.use(session(
+  {
+      secret: 'secret_key',
+      cookie: {
+        secure: false
+      },
+      store: new redisStore({
+        client : client,
+        ttl : 260
+      }),
+      saveUninitialized: false, 
+      resave: false
+  }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'client')));
 
 app.use('/', indexRouter);

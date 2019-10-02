@@ -3,11 +3,20 @@ var router = express.Router();
 const user = require('../database/userTable');
 
 router.get('/', (req, res, next) => {
-  res.render('adminAuthority');
+    console.log(req.session.passport);
+    if(req.isAuthenticated() && req.session.passport.user.auth >= 10){
+        res.render('adminAuthority');
+      }else{
+        res.redirect('/');
+      }
 });
 
 router.get('/authority', (req, res, next) => {
-    res.render('adminAuthority');
+    if(req.isAuthenticated() && req.session.passport.user.auth >= 10){
+        res.render('adminAuthority');
+      }else{
+        res.redirect('/');
+      }
   });
 
 router.post('/submit', async(req, res, next) => {
