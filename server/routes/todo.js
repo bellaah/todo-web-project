@@ -21,18 +21,23 @@ router.get('/remove', (req, res, next) => {
 
 router.get('/updateColumnName', (req, res, next) => {
     let column = req.body;
-    board.updateColumn(column.id,column.newName);
+    board.updateColumnName(column.id,column.newName);
     res.send(true);
 });
 
 router.get('/updateCard', (req, res, next) => {
     let card = req.body;
-    board.updateCard(card.cardId,card.content,card.file);
+    board.updateCardContent(card.cardId,card.content,card.file);
     res.send(true);
 });
 
 router.get('/addCard', async(req, res, next) => {
     await board.addCard(req.body);
+    res.send(true);
+});
+
+router.get('/moveCard', async(req, res, next) => {
+    await board.changeCardStatus();     //(cardId, newColumnId, prevCardIndex) 파라미터 넘기기 
     res.send(true);
 });
 
