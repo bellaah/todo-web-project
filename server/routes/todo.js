@@ -13,8 +13,8 @@ router.get('/updateColumn', (req, res, next) => {
 });
 
 router.get('/:userId', async(req, res, next) => {
-    console.log(await board.getTodoList(req.params.userId));
-    res.send(true);
+    let todoList = await board.getTodoList(req.params.userId);
+    res.send(todoList);
 });
 
 module.exports = router;
