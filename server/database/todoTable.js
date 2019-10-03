@@ -1,5 +1,5 @@
 const pool = require('./db');
-const columnModel = require('../models/column');
+const cardModel = require('../models/card');
 
 const getTodoList = async(userId) => {
     let query = `
@@ -32,35 +32,54 @@ const getTodoList = async(userId) => {
         if(boardList[elem.LIST_ID] == undefined){
             boardList[elem.LIST_ID] = {
                 "name" : elem.LIST_NAME,
-                "card" : [columnModel(elem)]
+                "card" : [cardModel(elem)]
             };
         }else{
-            boardList[elem.LIST_ID].card.push(columnModel(elem));
+            boardList[elem.LIST_ID].card.push(cardModel(elem));
         }
     });
 
     return boardList;
 };
 
-const removeCard = async(cardId) => {
+const removeCard = (cardId) => {
     let query = `DELETE FROM CARD WHERE CARD_ID = ?`;
-    await pool.query(query,[cardId]);
-    return;
+    pool.query(query,[cardId]);
 }
 
 const updateColumn = async(listId,newName) => {
     let query = `UPDATE LIST SET NAME = ? WHERE LIST_ID = ? `;
     await pool.query(query,[newName,listId]);
-    return;
 }
 
-const updateCard = async(cardId,content,file) => {
+const updateCard = (cardId,content,file) => {
     let query = `UPDATE CARD SET CONTENT = ?, EXTRA_FILE = ? WHERE CARD_ID = ? `;
-    await pool.query(query,[content,file,cardId]);
-    return;
+    pool.query(query,[content,file,cardId]);
+}
+
+const addCard = async(card) => {
+    let index = await getOrderIndex(card.listId);
+    let query = `
+    INSERT INTO
+        CARD(LIST_ID, CONTENT, EXTRA_FILE, WRITER_ID, ORDER_INDEX)
+        VALUES(?, ?, ?, ?, ?);`;
+
+    pool.query(query,[card.listId,card.content,card.file,card.writer,index]);
+}
+
+const getOrderIndex = async(listId) => {
+    let query = `
+    SELECT 
+      COUNT(*) AS CARD_COUNT 
+    FROM 
+      CARD 
+    WHERE 
+      LIST_ID = ?;`;
+    return (await pool.query(query, [listId]))[0][0].CARD_COUNT;
 }
 
 module.exports = { 
     getTodoList,removeCard,
-    updateColumn,updateCard
+    updateColumn,updateCard,
+    addCard,getOrderIndex
 };
