@@ -17,7 +17,7 @@ router.get('/authority', (req, res, next) => {
       }else{
         res.redirect('/');
       }
-  }); 
+}); 
 
 router.post('/submit', async(req, res, next) => {
     let isUser = await user.getUser(req.body.id,req.body.password);
@@ -31,7 +31,7 @@ router.get('/userList', async(req, res, next) => {
 
 router.post('/updateAuth', async(req, res, next) => {
     await user.updateAuth(eval(req.body));
-    res.send("secess");
+    res.send(true);
 });
 
 module.exports = router;

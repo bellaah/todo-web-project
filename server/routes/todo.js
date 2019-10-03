@@ -8,12 +8,19 @@ router.get('/remove', (req, res, next) => {
 });
 
 router.get('/updateColumn', (req, res, next) => {
-    board.updateColumn(req.body.cardId,req.body.newName);
+    let column = req.body;
+    board.updateColumn(column.cardId,column.newName);
     res.send(true);
 });
 
 router.get('/:userId', async(req, res, next) => {
     let todoList = await board.getTodoList(req.params.userId);
+    res.send(todoList);
+});
+
+router.get('/updateCard', async(req, res, next) => {
+    let card = req.body;
+    let todoList = await board.updateCard(card.cardId,card.content,card.file);
     res.send(todoList);
 });
 

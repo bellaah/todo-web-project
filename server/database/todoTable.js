@@ -5,7 +5,6 @@ const getTodoList = async(userId) => {
     let query = `
     SELECT
         LIST.NAME AS LIST_NAME,
-        CARD.TITLE AS CARD_TITLE,
         CARD.CONTENT AS CARD_CONTENT,
         CARD.EXTRA_FILE AS CARD_EXTRA_FILE,
         CARD.WRITER_ID AS CARD_WRITER_ID,
@@ -55,8 +54,13 @@ const updateColumn = async(listId,newName) => {
     return;
 }
 
+const updateCard = async(cardId,content,file) => {
+    let query = `UPDATE CARD SET CONTENT = ?, EXTRA_FILE = ? WHERE CARD_ID = ? `;
+    await pool.query(query,[content,file,cardId]);
+    return;
+}
 
 module.exports = { 
     getTodoList,removeCard,
-    updateColumn
+    updateColumn,updateCard
 };
