@@ -8,6 +8,7 @@ var indexRouter = require('./server/routes/index');
 var signUpRouter = require('./server/routes/signUp');
 var signInRouter = require('./server/routes/signIn');
 var adminRouter = require('./server/routes/admin');
+var todoRouter = require('./server/routes/todo');
 var app = express();
 
 const passport = require('./server/middlewares/passport');
@@ -58,6 +59,7 @@ app.use('/', indexRouter);
 app.use('/signUp', signUpRouter);
 app.use('/signIn', signInRouter);
 app.use('/admin', adminRouter);
+app.use('/todo', todoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -16,7 +16,7 @@ const getAllUsers = async() => {
 const insertUserData = async(userId,userName,userPwd) => {
     userPwd = crypto.createHash('sha512').update(userPwd).digest('base64');
     let query = `INSERT INTO USER VALUES ("${userId}","${userName}","${userPwd}")`;
-    await pool.query(query);
+    pool.query(query);
     return;
 };
 
@@ -36,11 +36,6 @@ const updateAuth = async(userList) => {
     });
     return;
 };
-
-
-
-
-
 
 
 module.exports = { 

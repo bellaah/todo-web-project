@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const user = require('../database/userTable');
+const checkAuth = require('../middlewares/isAdmin');
 
 router.get('/', (req, res, next) => {
-    console.log(req.session.passport);
     if(req.isAuthenticated() && req.session.passport.user.auth >= 10){
         res.render('adminAuthority');
-      }else{
+    }else{
         res.redirect('/');
-      }
+    }
 });
 
 router.get('/authority', (req, res, next) => {
