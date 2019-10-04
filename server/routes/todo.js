@@ -37,7 +37,8 @@ router.get('/addCard', async(req, res, next) => {
 });
 
 router.get('/moveCard', async(req, res, next) => {
-    await board.changeCardStatus();     //(cardId, newColumnId, prevCardIndex) 파라미터 넘기기 
+    await board.changeCardStatus(req.body.cardId,
+        req.body.newColumnId,req.body.prevCardIndex); 
     res.send(true);
 });
 

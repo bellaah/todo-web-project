@@ -2,14 +2,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const user = require('../database/userTable');
 
-
 passport.serializeUser(function(user, done) {
-    console.log("serializeUser "+ JSON.stringify(user));
     done(null, user);   
 });
 
 passport.deserializeUser(function(user, done) {
-    console.log("deserializeUser "+user);
     done(null , user);
 });
 

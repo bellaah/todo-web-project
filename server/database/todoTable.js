@@ -66,17 +66,14 @@ const getTodoList = async(userId) => {
     return boardList;
 };
 
-const removeCard = (cardId) => {
+const removeCard = async(cardId) => {
     let query = `DELETE FROM CARD WHERE CARD_ID = ?`;
     pool.query(query,[cardId]);
 
     try {
         await pool.promise().query(query, [cardId]);
-        await updateOrderIndex(
-        undefined, 
-        'ORDER_INDEX',
-        'ORDER_INDEX - 1', 
-        `ORDER_INDEX > ${orderIndex}`);
+        await updateOrderIndex(undefined, 'ORDER_INDEX', 
+                            'ORDER_INDEX - 1', `ORDER_INDEX > ${orderIndex}`);
         return true;
     } catch (e) {
         throw e;
@@ -97,11 +94,7 @@ const changeCardStatus = async(cardId, newColumnId, prevCardIndex) => {
             await _moveOtherColumn(card, newColumnId, currentOrderIndex, newOrderIndex);    
         }
 
-        await updateOrderIndex(
-            newColumnId, 
-            'ORDER_INDEX',
-            newOrderIndex, 
-            `CARD_ID = ${card.ID}`);
+        await updateOrderIndex(newColumnId, 'ORDER_INDEX', newOrderIndex, `CARD_ID = ${card.ID}`);
     }catch(e){
         console.log(e);
     }
@@ -109,11 +102,11 @@ const changeCardStatus = async(cardId, newColumnId, prevCardIndex) => {
 
 const updateOrderIndex = async(columnId, target, targetValue, whereClause) => {
     const query = `
-        UPDATE
-            CARD
-        SET
+        UPDATE 
+            CARD 
+        SET 
             ${target} = ${targetValue}
-        WHERE
+        WHERE 
             ${columnId ? 'LIST_ID = ?' : 'TRUE'} AND ${whereClause}`;
 
     try{
@@ -124,46 +117,26 @@ const updateOrderIndex = async(columnId, target, targetValue, whereClause) => {
     }
 }
 
-const _moveSameColumn = (card, currentOrderIndex, newOrderIndex) => {
+const _moveSameColumn = async(card, currentOrderIndex, newOrderIndex) => {
     if (currentOrderIndex > newOrderIndex) {
-        await updateOrderIndex(
-            card.LIST_ID, 
-            'ORDER_INDEX',
-            'ORDER_INDEX + 1', 
+        await updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX + 1', 
             `ORDER_INDEX BETWEEN ${newOrderIndex} AND ${currentOrderIndex - 1}`);
     }else{
-      await updateOrderIndex(
-        card.LIST_ID, 
-        'ORDER_INDEX',
-        'ORDER_INDEX - 1', 
-        `ORDER_INDEX BETWEEN ${currentOrderIndex + 1} AND ${newOrderIndex}`);
+      await updateOrderIndex(card.LIST_ID, 'ORDER_INDEX','ORDER_INDEX - 1', 
+            `ORDER_INDEX BETWEEN ${currentOrderIndex + 1} AND ${newOrderIndex}`);
         newOrderIndex--;
     }
 }
 
-const _moveOtherColumn = (card, newColumnId, currentOrderIndex, newOrderIndex) => {
-    await updateOrderIndex(
-        card.LIST_ID, 
-        'ORDER_INDEX',
-        'ORDER_INDEX - 1', 
-        `ORDER_INDEX > ${currentOrderIndex}`);
-
-    await updateOrderIndex(
-        newColumnId,
-        'ORDER_INDEX',
-        'ORDER_INDEX + 1',
-        `ORDER_INDEX >= ${newOrderIndex}`);
-
-    await updateOrderIndex(
-        card.LIST_ID,
-        'COLUMN_ID',
-        newColumnId,
-        `CARD_ID = ${card.ID}`);
+const _moveOtherColumn = async(card, newColumnId, currentOrderIndex, newOrderIndex) => {
+    await updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX - 1', `ORDER_INDEX > ${currentOrderIndex}`);
+    await updateOrderIndex(newColumnId, 'ORDER_INDEX', 'ORDER_INDEX + 1', `ORDER_INDEX >= ${newOrderIndex}`);
+    await updateOrderIndex(card.LIST_ID, 'COLUMN_ID', newColumnId, `CARD_ID = ${card.ID}`);
 }
 
 
 module.exports = { 
     getTodoList,removeCard,
     updateColumnName,updateCardContent,
-    addCard,getOrderIndex,changeCardStatus,
+    addCard,getOrderIndex,changeCardStatus
 };
