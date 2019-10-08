@@ -11,6 +11,13 @@ class column {
                     <button class="add-card-btn">+</button>
                     <button class="column-menu-btn">...</button>
                 </div>
+                <div class="add-card-div">
+                    <textarea name="content" data-input-max-length="500" placeholder="Enter a note"></textarea>
+                    <div class="add-card-btn-div">
+                        <button class="add-card-btn">Add</button>
+                        <button class="add-cancel-btn">Cancel</button>
+                    </div>
+                </div>
                 ${cardHtml}
             </div>`;
         return html; 

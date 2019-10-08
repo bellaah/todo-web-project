@@ -10,11 +10,17 @@ $columnBackColor: #eff1f3;
     flex-direction: $d;
 }
 
+@mixin borderRaduis($radius,$color){
+    border: 1px solid $color;
+    border-radius: $radius;
+}
+
 html{
     font-size: 10px;
     height: 100%;
     body{
         height: 100%;
+        font-size: 1rem;
     }
 }
 
@@ -40,29 +46,28 @@ header{
 }
 
 .board{
-    @include setHeightAndWidth(85%,96%);
     margin: 2rem;
+    @include setHeightAndWidth(85%,96%);
     @include setflexAndDirection(row);
     .column{
+        margin: 0 1rem;
+        overflow: scroll;
         background-color: $columnBackColor;
         @include setHeightAndWidth(100%,40rem);
-        border: 1px solid #e1e4e8;
-        margin: 0 1rem;
-        border-radius: 0.5rem;
-        overflow: scroll;
+        @include borderRaduis(0.5rem,#e1e4e8);
     }
 }
 
 .column-head{
-    @include setflexAndDirection(row);
     margin: 1rem;
     height: 3rem;
+    @include setflexAndDirection(row);
     .card-count-btn{
         background-color: #D3D3D3;
         border-radius: 2rem;
-        @include setHeightAndWidth(fit-content,fit-content);
         padding: 0.5rem 1rem;
         margin-right: 0.4rem;
+        @include setHeightAndWidth(fit-content,fit-content);
     }
     .column-name{
         font-size: 1.5rem;
@@ -70,24 +75,50 @@ header{
     .add-card-btn{
         margin-left: auto;
     }
-
 }
+
+.add-card-div{
+    textarea{
+        margin: 0 1rem;
+        resize: vertical;
+        font-size: 1.5rem;
+        @include setHeightAndWidth(5rem,-webkit-fill-available);
+        @include borderRaduis(0.5rem,#e1e4e8);
+    }
+    .add-card-btn-div{
+        @include setflexAndDirection(row);
+        button{
+            margin: 1rem;
+            @include borderRaduis(0.5rem,rgba(27,31,35,.2)); 
+            @include setHeightAndWidth(4rem,-webkit-fill-available);
+        }
+        .add-card-btn{
+            color: white;
+            background-color:#28a745;
+            background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+        }
+        .add-cancel-btn{
+            width: 1;
+            background-color:$columnBackColor;
+            background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+        }
+    }
+}
+
 
 .card{
     height: 5rem;
     margin: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e1e4e8;
     box-shadow: 0 1px 1px rgba(27,31,35,.1);
     background-color: white;
+    @include borderRaduis(0.5rem,#e1e4e8);
     @include setflexAndDirection(row);
-    .card-icon{
-        height: fit-content;
-
+    .glyphicon-align-left{
+        margin: 1rem;
     }
     .card-center{
-        @include setflexAndDirection(column);
         width: -webkit-fill-available;
+        @include setflexAndDirection(column);
         .card-center-content{
             font-size: 1.5rem;
             margin: 0.5rem 0;

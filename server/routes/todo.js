@@ -31,7 +31,7 @@ router.get('/moveCard', async(req, res, next) => {
 });
 
 router.get('/:userId', async(req, res, next) => {
-    res.render('board');
+    res.render('board',{userId :req.params.userId});
 });
 
 router.post('/getBoard', async(req, res, next) => {
