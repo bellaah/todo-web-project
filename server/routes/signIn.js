@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const user = require('../database/userTable');
+const user = require('../models/users');
 const passport = require('../middlewares/passport');
 
 router.get('/', (req, res, next) => {

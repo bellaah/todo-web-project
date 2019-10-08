@@ -1,5 +1,4 @@
 node_modules
-server/routes/database/db.js
 .DS_Store
 package-lock.json
 dump.rdb

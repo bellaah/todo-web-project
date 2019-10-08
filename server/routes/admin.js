@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const user = require('../database/userTable');
+const user = require('../models/users');
 const checkAuth = require('../middlewares/isAdmin');
 
 router.use(checkAuth);
@@ -22,5 +22,10 @@ router.post('/updateAuth', async(req, res, next) => {
     await user.updateAuth(eval(req.body));
     res.send(true);
 });
+
+router.get('/userList', async(req, res, next) => {
+    let userList = await user.getAllUsers();
+    res.send(userList);
+}); 
 
 module.exports = router;

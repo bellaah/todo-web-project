@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="../stylesheets/css/resert.css" rel="stylesheet">
+        <link href="../stylesheets/css/signUp.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="register">
+            <header class="header">
+                <h2 id="register_text">회원가입</h2>
+            </header>
+            <form class="register_form" method="post" action="/signUp/submit">
+                <div class="text_input">
+                    <label for="name_input">이름<br></label>
+                <input id="name_input" type="text" name="name">
+                <span class="red_text" id="name_check"></span>
+                </div>
+            <div class="text_input">
+                <label for="id_input">아이디<br></label>
+                <input id="id_input" type="text" name="id">
+                <span class="red_text" id="id_check"></span>
+            </div>
+            <div class="text_input">
+                <label for="pwd_input">비밀번호<br></label>
+                <input id="pwd_input" type="password" name="password">
+                <span class="red_text" id="pwd_check"></span>
+            </div><div class="text_input">
+                <label for="pwd_confirm_Input">비밀번호 재확인<br></label>
+                <input id="pwd_confirm_input" type="password" name="pwd_confirm">
+                <span class="red_text" id="pwd_confirm_check"></span>
+            </div>
+            <div class="green_btn"><input type="button" onclick="resetLayer()" value="초기화">
+                <input type="button" value="가입하기" onclick="checkAll()">
+            </div>
+            <div class="pop_layer">
+                <button id="layer_exit_btn" type="button" onclick="closeLayer()">
+                    <b id="layer_exit_b">X</b>
+                </button>
+                <b id="layer_head"></b>
+                    <pre id="layer_text" onscroll="scrolled(this)"></pre>
+                    <div id="layer_btn"></div>
+            </div>
+            <div id="backgound_div"></div>
+            </form>
+            <footer id="register_footer">
+                <div>
+                    <p>&copy; heessun</p>
+                </div>
+            </footer>
+        </div>
+    </body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="/src/utils/util.js"></script>
+    <script type="text/javascript" src="/src/utils/signUpInputCheck.js"></script>
+    <script type="text/javascript" src="/src/utils/layer.js"></script>
+</html>

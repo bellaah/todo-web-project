@@ -1,17 +1,16 @@
-
 let list;
 
 const itemRender = (list) => {
     let childHTML = "";
     list.forEach(obj => {
-        if(obj.auth < 99){
+        if(obj.AUTHORITY < 99){
             childHTML += `
-<tr>
-    <th>${obj.id}</th>
-    <td>${obj.name}</td>
-    ${isAdmin(obj.auth,obj.id)}
-</tr>
-`
+            <tr>
+                <th>${obj.ID}</th>
+                <td>${obj.NAME}</td>
+                ${isAdmin(obj.AUTHORITY,obj.ID)}
+            </tr>
+            `
         }
     });
     return childHTML;
@@ -54,9 +53,7 @@ const matchIdAndCheckbox = () => {
     .then((res) => {
         return res.json();
     })
-    .then((data) => {
-        return data;
-    })
+
     document.querySelector(".user-table").innerHTML = itemRender(list);
     checkAdminListener();
 })()

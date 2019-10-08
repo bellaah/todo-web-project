@@ -9,4 +9,9 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
+router.get('/board', function(req, res, next) {
+  res.render('board');
+});
+
+
 module.exports = router;

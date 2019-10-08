@@ -1,0 +1,105 @@
+$columnBackColor: #eff1f3;
+
+@mixin setHeightAndWidth($h,$w){
+    height: $h;
+    width: $w;
+}
+
+@mixin setflexAndDirection($d){
+    display: flex;
+    flex-direction: $d;
+}
+
+html{
+    font-size: 10px;
+    height: 100%;
+    body{
+        height: 100%;
+    }
+}
+
+button{
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+}
+
+header{
+    height: 6rem;
+    background-color:#24292e;
+    display: flex;
+    span{
+        color: white;
+        font-size: 2rem;
+        margin: 2rem;
+        width: fit-content;
+    }
+    .menu-btn{
+        margin-left: auto;
+    }
+}
+
+.board{
+    @include setHeightAndWidth(85%,96%);
+    margin: 2rem;
+    @include setflexAndDirection(row);
+    .column{
+        background-color: $columnBackColor;
+        @include setHeightAndWidth(100%,40rem);
+        border: 1px solid #e1e4e8;
+        margin: 0 1rem;
+        border-radius: 0.5rem;
+        overflow: scroll;
+    }
+}
+
+.column-head{
+    @include setflexAndDirection(row);
+    margin: 1rem;
+    height: 3rem;
+    .card-count-btn{
+        background-color: #D3D3D3;
+        border-radius: 2rem;
+        @include setHeightAndWidth(fit-content,fit-content);
+        padding: 0.5rem 1rem;
+        margin-right: 0.4rem;
+    }
+    .column-name{
+        font-size: 1.5rem;
+    }
+    .add-card-btn{
+        margin-left: auto;
+    }
+
+}
+
+.card{
+    height: 5rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e1e4e8;
+    box-shadow: 0 1px 1px rgba(27,31,35,.1);
+    background-color: white;
+    @include setflexAndDirection(row);
+    .card-icon{
+        height: fit-content;
+
+    }
+    .card-center{
+        @include setflexAndDirection(column);
+        width: -webkit-fill-available;
+        .card-center-content{
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        .card-center-wrtier{
+            margin-bottom: 0;
+        }
+    }
+    .card-menu-btn{
+        height: fit-content;
+    }
+}
+
+
+

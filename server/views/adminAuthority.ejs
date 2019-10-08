@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+    <head>
+        <link href="../stylesheets/css/reset1.css" rel="stylesheet">
+        <link href="../stylesheets/css/admin.css" rel="stylesheet">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/admin">ITEM</a>
+                </li>
+                <li>
+                    <a href="/admin/authority">USERS</a>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <p> USER </p>
+            <table>
+                <thead>
+                    <tr></tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>ADMIN</th>
+                </thead>
+                <tbody class="user-table"></tbody>
+            </table>
+            <button class="save-btn">저장</button>
+        </section>
+    </body>
+    <script type="module" src="/src/components/adminUser.js"></script>
+</html>

@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
+var ejs = require('ejs');
+
 var indexRouter = require('./server/routes/index');
 var signUpRouter = require('./server/routes/signUp');
 var signInRouter = require('./server/routes/signIn');
@@ -18,9 +20,8 @@ var redisStore = require('connect-redis')(session);
 
 var client = redis.createClient(6379,'localhost');
 
-// view engine setup
 app.set('views', path.join(__dirname, '/server/views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -74,7 +75,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
 });
 
 module.exports = app;

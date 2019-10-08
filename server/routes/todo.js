@@ -1,18 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const board = require('../database/todoTable');
-var multer = require('multer');
-
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'client/static_root/');
-        },
-        filename: function (req, file, cb) {
-            cb(null, file.originalname);
-        }
-    }),
-});
+const board = require('../models/todo');
 
 router.get('/remove', (req, res, next) => {
     board.removeCard(req.body.cardId);
@@ -43,10 +31,12 @@ router.get('/moveCard', async(req, res, next) => {
 });
 
 router.get('/:userId', async(req, res, next) => {
-    let todoList = await board.getTodoList(req.params.userId);
-    res.send(todoList);
+    res.render('board');
 });
 
-
+router.post('/getBoard', async(req, res, next) => {
+    let todoList = await board.getTodoList(req.body.userId);
+    res.send(todoList);
+});
 
 module.exports = router;
