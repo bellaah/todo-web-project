@@ -8,7 +8,7 @@ class card{
                     <span class="card-center-content">${obj.CARD_CONTENT}</span>
                     <span class="card-center-wrtier">added by ${obj.CARD_WRITER_ID}</span>
                 </div>
-                <button class="card-menu-btn">...</button>
+                <button class="card-menu-btn">x</button>
             </div>`;
     }
 }

@@ -46,6 +46,10 @@ header{
     }
 }
 
+.add-card-btn:hover,.card-menu-btn:hover{
+    color: $primaryBlue;
+}
+
 .board{
     margin: 2rem;
     @include setHeightAndWidth(85%,96%);
@@ -75,9 +79,6 @@ header{
     }
     .add-card-btn{
         margin-left: auto;
-    }
-    .add-card-btn:hover{
-        color: $primaryBlue;
     }
 }
 
