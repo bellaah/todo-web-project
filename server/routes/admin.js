@@ -13,6 +13,11 @@ router.get('/authority', (req, res, next) => {
     res.render('adminAuthority');
 }); 
 
+router.get('/userList', async(req, res, next) => {
+    let userList = await user.getAllUsers();
+    res.send(userList);
+}); 
+
 router.post('/submit', async(req, res, next) => {
     let isUser = await user.getUser(req.body.id,req.body.password);
     res.send(isUser);
@@ -22,10 +27,5 @@ router.post('/updateAuth', async(req, res, next) => {
     await user.updateAuth(eval(req.body));
     res.send(true);
 });
-
-router.get('/userList', async(req, res, next) => {
-    let userList = await user.getAllUsers();
-    res.send(userList);
-}); 
 
 module.exports = router;

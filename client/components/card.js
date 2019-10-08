@@ -1,6 +1,5 @@
 class card{
     render(obj){
-         console.log(obj);
         return `
             <div class="card" id="order-index-${obj.ORDER_INDEX}">
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>

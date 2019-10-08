@@ -1,7 +1,7 @@
 import Card from './card.js';
 
 class column {
-    render = async(columnId,obj) => {
+    async render(columnId,obj){
         let cardHtml = await this.makeCard(obj.card,columnId);
         let html = `
             <div class="column" id="column-${columnId}">
@@ -23,7 +23,7 @@ class column {
         return html; 
     }
 
-    makeCard = (cardList) =>{
+    makeCard(cardList){
         let cardHtml = "";
         let card = new Card();
         cardList.forEach(elem => {

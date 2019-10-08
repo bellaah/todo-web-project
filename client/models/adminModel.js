@@ -1,25 +1,4 @@
-let list;
-
-const itemRender = (list) => {
-    let childHTML = "";
-    list.forEach(obj => {
-        if(obj.AUTHORITY < 99){
-            childHTML += `
-            <tr>
-                <th>${obj.ID}</th>
-                <td>${obj.NAME}</td>
-                ${isAdmin(obj.AUTHORITY,obj.ID)}
-            </tr>
-            `
-        }
-    });
-    return childHTML;
-}
-
-const isAdmin = (adminNumber,userID) => {
-    return adminNumber >= 10 ? `<td><input id="${userID}" type="checkbox" checked/></td>` 
-    : `<td><input id="${userID}" type="checkbox"/></td>`;
-}
+import Admin from '../components/admin.js';
 
 const checkAdminListener = () => {
     let saveBtn = document.querySelector(".save-btn");
@@ -40,7 +19,7 @@ const matchIdAndCheckbox = () => {
     let userList = document.querySelectorAll("tbody > tr");
     userList.forEach(elem => {
         let userElment = elem.querySelector("input");
-       idCheckboxList.push({
+        idCheckboxList.push({
            id : userElment.id,
            admin : userElment.checked ? 10 : 0
         })
@@ -49,11 +28,12 @@ const matchIdAndCheckbox = () => {
 }
 
 (async() => {
-    list = await fetch('/admin/userList')
+    let list = await fetch('/admin/userList')
     .then((res) => {
         return res.json();
     })
 
-    document.querySelector(".user-table").innerHTML = itemRender(list);
+    let admin = new Admin();
+    document.querySelector(".user-table").innerHTML = admin.render(list);
     checkAdminListener();
 })()

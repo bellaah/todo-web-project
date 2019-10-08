@@ -11,4 +11,11 @@ router.post('/submit', async(req, res, next) => {
     res.send(await user.getAllUsers());
 });
 
+router.post('/duplicateCheck', async(req, res, next) => {
+  let isUser = await user.getUserId(req.body.userId);
+  res.send(isUser);
+});
+
+
+
 module.exports = router;

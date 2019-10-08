@@ -1,5 +1,5 @@
 const idChecker = {
-    registerEvent() {
+    registerEvent(){
         const idInput = document.querySelector("#id_input");
         idInput.addEventListener("input", () => {
             this.idCheck(idInput.value);
@@ -8,7 +8,7 @@ const idChecker = {
             this.duplicateCheck(idInput.value)
         })
     },
-    idCheck(idInput) {
+    idCheck(idInput){
         const idSpan = document.querySelector("#id_check");
         const idRegExp = /^[A-Za-z0-9-_]{5,20}$/;
 
@@ -18,26 +18,27 @@ const idChecker = {
             changeAttribute(idSpan,"green_text","사용 가능한 아이디입니다.");
         }
     },
-    duplicateCheck(idInput) {
+    duplicateCheck(idInput){
         const idSpan = document.querySelector("#id_check");
-        axios({
+        fetch('/signUp/duplicateCheck', {
             method: 'post',
-            url: '/dbCheck/duplicateCheck',
-            data: {
-                id : idInput
-            }
-        }).then(res => {
-            if(res.data){
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId : idInput })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data){
                 changeAttribute(idSpan,"red_text","이미 사용중인 아이디입니다.");
             }
-        }).catch(error => {
-            console.log(error);
         });
     }
 }
 
 const pwdChecker= {
-    registerEvent() {
+    registerEvent(){
         const pwdInput = document.querySelector("#pwd_input");
         const pwdConfirmInput = document.querySelector("#pwd_confirm_input");
         pwdInput.addEventListener("input", () => {
@@ -50,7 +51,7 @@ const pwdChecker= {
             this.pwdConfirmCheck(pwdConfirmInput,pwdInput);
         })
     },
-    pwdCheck(pwdInput) {
+    pwdCheck(pwdInput){
         const pwdSpan = document.querySelector("#pwd_check");
 
         if(pwdInput.value.length < 8 || pwdInput.value.length > 17){
@@ -65,7 +66,7 @@ const pwdChecker= {
             changeAttribute(pwdSpan,"green_text","안전한 비밀번호입니다.");
         }
     },
-    pwdConfirmCheck(pwdConfirmInput,pwdInput) {
+    pwdConfirmCheck(pwdConfirmInput,pwdInput){
         const pwdConfirmSpan = document.querySelector("#pwd_confirm_check");
         if(pwdConfirmInput.value !== pwdInput.value){
             changeAttribute(pwdConfirmSpan,"red_text","비밀번호가 일치하지 않습니다.");
@@ -76,13 +77,13 @@ const pwdChecker= {
 }
 
 const nameChecker = {
-    registerEvent() {
+    registerEvent(){
         const nameInput = document.querySelector("#name_input");
         nameInput.addEventListener("input", () => {
             this.nameCheck(nameInput);
         })
     },
-    nameCheck(nameInput) {
+    nameCheck(nameInput){
         const nameSpan = document.querySelector("#name_check");
         if(nameInput.value == ""){
             changeAttribute(nameSpan,"red_text","");
@@ -98,9 +99,6 @@ const changeAttribute = (selector,className,str) => {
     selector.innerHTML = str;
 }
 
-const registerEventListener = () => {
-    idChecker.registerEvent();
-    nameChecker.registerEvent();
-    pwdChecker.registerEvent();
-}
-registerEventListener();
+idChecker.registerEvent();
+nameChecker.registerEvent();
+pwdChecker.registerEvent();
