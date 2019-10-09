@@ -11,7 +11,8 @@ module.exports = {
     },
 
     addCard : async(card) => {
-        const index = await getOrderIndex(card.listId);
+        const [rows] = await pool.query(todo.getOrderIndex,[card.listId]);
+        let index = rows[0].CARD_COUNT;
         pool.query(todo.insertCard,[card.listId,card.content,card.file,card.writer,index]);
     },
 

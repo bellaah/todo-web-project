@@ -22,9 +22,10 @@ class columnModel{
             case "add-cancel-btn":
                 this.clickCancelBtn(evtTarget); break;
             case "add-card-green-btn":
-                let content = findInParentX2(evtTarget,"textarea").value;
+                let content = findInParentX2(evtTarget,"textarea");
                 let listId = evtTarget.dataset.columns;
-                this.addCard(content,listId); break;
+                this.addCard(content.value,listId);
+                content.value = ""; break;
         }
     }
 
