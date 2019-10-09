@@ -8,7 +8,9 @@ class columnModel{
         columnList.forEach(column => {
             column.addEventListener("click",(evt) => {
                 if(evt.target.className === "add-card-btn") {
-                    this.clickPlusButton(evt.target);
+                    this.clickPlusBtn(evt.target);
+                }else if(evt.target.className === "add-cancel-btn"){
+                    this.clickCancelBtn(evt.target);
                 }
             }); 
         });
@@ -21,11 +23,16 @@ class columnModel{
         });
     }
 
-    clickPlusButton(evtTarget){
+    clickPlusBtn(evtTarget){
         const addCardDiv = findInParentX2(evtTarget,".add-card-div");
         let [oldName, newName] = addCardDiv.classList.contains("hidden") ? 
                                 ["hidden","visible"] : ["visible","hidden"];
         this.changeClassList(addCardDiv,oldName,newName);
+    }
+
+    clickCancelBtn(evtTarget){
+        const addCardDiv = evtTarget.parentNode.parentNode;
+        this.changeClassList(addCardDiv,"visible","hidden");
     }
 
     enterText(evtTarget,isEmpty){
