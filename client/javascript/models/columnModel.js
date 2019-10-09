@@ -11,21 +11,26 @@ class columnModel{
 
     registerEvent(list,event,func){
         list.forEach(elem => {
-            elem.addEventListener(event,(evt) => func.bind(this)(evt));
+            elem.addEventListener(event,(evt) => func.bind(this)(evt.target) );
         });
     }
 
-    clickEvent(evt){
-        if(evt.target.className === "add-card-btn") {
-            this.clickPlusBtn(evt.target);
-        }else if(evt.target.className === "add-cancel-btn"){
-            this.clickCancelBtn(evt.target);
+    clickEvent(evtTarget){
+        switch(evtTarget.className.split(" ")[0]){
+            case "add-card-btn":
+                this.clickPlusBtn(evtTarget); break;
+            case "add-cancel-btn":
+                this.clickCancelBtn(evtTarget); break;
+            case "add-card-green-btn":
+                let content = findInParentX2(evtTarget,"textarea").value;
+                let listId = evtTarget.dataset.columns;
+                this.addCard(content,listId); break;
         }
     }
 
-    inputEvent(evt){
-        let isEmpty = textArea.value == "" ? true : false;
-        this.enterText(evt.target,isEmpty);
+    inputEvent(evtTarget){
+        let isEmpty = evtTarget.value == "" ? true : false;
+        this.enterText(evtTarget,isEmpty);
     }
 
     clickPlusBtn(evtTarget){
@@ -49,6 +54,17 @@ class columnModel{
     changeClassList(target,oldName,newName){
         target.classList.remove(oldName);
         target.classList.add(newName);
+    }
+
+    addCard(content,listId){
+        fetch('/todo/addCard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode:"cors",
+            body: JSON.stringify({ content, listId })
+        });
     }
 
 }
