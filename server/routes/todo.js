@@ -26,8 +26,8 @@ router.post('/updateCard', (req, res, next) => {
 });
 
 router.post('/addCard', async(req, res, next) => {
-    await board.addCard(req.body);
-    res.send(true);
+    let card = await board.addCard(req.body);
+    res.send(card);
 });
 
 router.post('/moveCard', async(req, res, next) => {

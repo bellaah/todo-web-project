@@ -3,6 +3,11 @@ import observable from '../src/observable.js';
 import {$} from '../src/util.js';
 
 class column extends observable{
+    constructor(){
+        super();
+        this.card = new Card();
+    }
+
     async render(columnId,obj){
         let cardHtml = await this.makeCard(obj.card,columnId);
         let html = `
@@ -26,14 +31,18 @@ class column extends observable{
     }
 
     makeCard(cardList){
-        let card = new Card();
-        let cardHtml = cardList.reduce((pre, cur) => pre + card.render(cur), '');
+        let cardHtml = cardList.reduce((pre, cur) => pre + this.card.render(cur), '');
         return cardHtml;
     }
 
-    update(state) {
-        console.log(state);
-        $(`.card-id-${state.cardId}`).remove();
+    async update(state) {
+        if(state.type === "delete"){
+            $(`.card-id-${state.cardId}`).remove();
+        }else{
+            const curColumn = $(`.column-id-${state.LIST_ID}`);
+            let cardHtml = await this.card.render(state);
+            curColumn.insertAdjacentHTML('beforeend',cardHtml);
+        }
     }
 }
 

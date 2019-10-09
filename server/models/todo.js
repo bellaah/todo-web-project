@@ -13,7 +13,13 @@ class Todo{
     async addCard(card){
         const [rows] = await pool.query(todo.getOrderIndex,[card.listId]);
         let index = rows[0].CARD_COUNT;
-        pool.query(todo.insertCard,[card.listId,card.content,card.file,card.writer,index]);
+        await pool.query(todo.insertCard,[card.listId,card.content,card.file,card.writer,index]);
+        return await this.getMaxCardId();
+    }
+
+    async getMaxCardId(){
+        const [rows] = await pool.query(todo.getLastCard);
+        return rows[0];
     }
 
     async getOrderIndex(listId){

@@ -16,7 +16,7 @@ class columnModel extends observable{
         });
     }
 
-    clickEvent(evtTarget){
+    async clickEvent(evtTarget){
         switch(evtTarget.className.split(" ")[0]){
             case "add-card-btn":
                 this.clickPlusBtn(evtTarget); break;
@@ -25,9 +25,10 @@ class columnModel extends observable{
             case "add-card-green-btn":
                 let content = findInParentX2(evtTarget,"textarea");
                 let listId = evtTarget.dataset.columns;
-                this.addCard(content.value,listId);
-                content.value = ""; 
-                this.changeState({ type : "add"}); break;
+                let card = await this.addCard(content.value,listId);
+                card.type = "add";
+                this.changeState(card); 
+                content.value = ""; break;
             case "card-delete-btn":
                 let data = evtTarget.parentNode.dataset
                 let [cardId,orderIndex,columnId] = [data.cardId,data.orderIndex,data.columns];
@@ -64,15 +65,17 @@ class columnModel extends observable{
         target.classList.add(newName);
     }
 
-    addCard(content,listId){
-        fetch('/todo/addCard', {
+    async addCard(content,listId){
+        let cardId = await fetch('/todo/addCard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             mode:"cors",
             body: JSON.stringify({ content, listId })
-        });
+        })
+        .then(res => res.json());
+        return cardId;
     }
 
     deleteCard(cardId,orderIndex,columnId){
