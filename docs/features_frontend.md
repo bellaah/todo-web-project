@@ -7,15 +7,15 @@
 - [x] board UI-3:  해당 column의 할 일 개수가 표시된다. (초깃값 0)
 
 ### day2
-- [ ] board UI-4: +버튼 위로 마우스 hover 하면 +버튼의 색상이 변경된다.
+- [x] board UI-4: +버튼 위로 마우스 hover 하면 +버튼의 색상이 변경된다.
 - [ ] board UI-5: +버튼을 클릭하면 입력창, Add 버튼, Cancel 버튼이 노출되고, +버튼을 한 번 더 클릭하면 다시 사라진다.
-- [ ] board UI-6: 입력창에 placeholder가 있다.
+- [x] board UI-6: 입력창에 placeholder가 있다.
 - [ ] board UI-7: 입력창에 글자를 입력하면 Add 버튼이 활성화된다.
 - [ ] board UI-8: 입력창에 글자가 길어지면 입력창 오른쪽에 스크롤이 생긴다.
 - [ ] board UI-9: 입력창에 글자를 작성하다 전부 지우면 다시 placeholder가 나타나고 Add 버튼도 다시 비활성화된다.
-- [ ] board UI-10: 입력창은 우측하단에 그립을 잡아서 세로로 늘리고 줄일 수 있다.
+- [x] board UI-10: 입력창은 우측하단에 그립을 잡아서 세로로 늘리고 줄일 수 있다.
 - [ ] board UI-11: Cancel 버튼을 클릭하면 입력창이 사라진다.
-- [ ] board UI-12:  x 버튼에 마우스 hover 하면 x 버튼의 색상이 변경된다.
+- [x] board UI-12:  x 버튼에 마우스 hover 하면 x 버튼의 색상이 변경된다.
 - [ ] board UI-13: 입력창에 내용을 입력하면 save note 버튼이 활성화되고 모든 내용을 지우면 Save note 버튼은 비활성화된다. 
 - [ ] board UI-14: 할 일을 입력하고 Add 버튼을 클릭하면 하단에 할 일 카드가 추가된다.
 - [ ] board UI-15: 할 일이 추가되면 2번 영역은 다시 초기화(입력창에 텍스트 지워지고 placeholder 생김 + Add 버튼 비활성화)된다.

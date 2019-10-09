@@ -2,6 +2,10 @@ const $ = (name) => {
     return document.querySelector(name);
 }
 
+const $$ = (name) => {
+    return document.querySelectorAll(name);
+}
+
 const focusIn = () => {
     tagDiv.style.borderColor='#2cb400';
 }
@@ -17,7 +21,7 @@ const RemoveItself = (elem) => {
 }
 
 const customReset = () => {
-    const registerForm = document.querySelector(".register_form");
+    const registerForm = $(".register_form");
     registerForm.reset();
     resetTag();
     resetSpan();
@@ -25,8 +29,8 @@ const customReset = () => {
 }
 
 const resetSpan = () => {
-    const redSpan = document.querySelectorAll(".red_text");
-    const greenSpan = document.querySelectorAll(".green_text");
+    const redSpan = $$(".red_text");
+    const greenSpan = $$(".green_text");
 
     redSpan.forEach(elem => {
         elem.innerHTML = "";
@@ -52,7 +56,7 @@ const checkAll = () => {
 }
 
 const checkInputAll = () => {
-    const redSpan =  document.querySelectorAll(".red_text");
+    const redSpan =  $$(".red_text");
     let errorText = {id_check : "아이디를 형식에 맞게 입력해주세요.",
                     pwd_check : "비밀번호를 형식에 맞게 입력해주세요.",
                     pwd_confirm_check : "비밀번호가 일치하지 않습니다.",
@@ -64,3 +68,5 @@ const checkInputAll = () => {
     })
     return redList;
 }
+
+export {$,$$};

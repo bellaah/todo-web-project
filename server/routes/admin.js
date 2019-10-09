@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const user = require('../models/users');
 const checkAuth = require('../middlewares/isAdmin');
 
@@ -17,11 +17,6 @@ router.get('/userList', async(req, res, next) => {
     let userList = await user.getAllUsers();
     res.send(userList);
 }); 
-
-router.post('/submit', async(req, res, next) => {
-    let isUser = await user.getUser(req.body.id,req.body.password);
-    res.send(isUser);
-});
 
 router.post('/updateAuth', async(req, res, next) => {
     await user.updateAuth(eval(req.body));

@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const user = require('../models/users');
 
 router.get('/', (req, res, next) => {
@@ -15,7 +15,6 @@ router.post('/duplicateCheck', async(req, res, next) => {
   let isUser = await user.getUserId(req.body.userId);
   res.send(isUser);
 });
-
 
 
 module.exports = router;

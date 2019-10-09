@@ -1,0 +1,26 @@
+import BoardModel from './models/boardModel.js';
+import ColumnModel from './models/columnModel.js';
+
+const start = async() => {
+    const boardModel = new BoardModel();
+    const columnModel = new ColumnModel();
+    const boardList = getBoardData();
+
+    await boardModel.init(boardList);
+    columnModel.registerEventListener();
+}
+
+const getBoardData = async() => {
+    let url = window.location.href.split('/');
+    let boardList = await fetch('/todo/getBoard', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId : url[url.length-1] })
+    })
+    .then(res => res.json());
+    return boardList;
+}
+start();

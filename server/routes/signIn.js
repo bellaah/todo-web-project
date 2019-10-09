@@ -1,6 +1,5 @@
-var express = require('express');
-var router = express.Router();
-const user = require('../models/users');
+const express = require('express');
+const router = express.Router();
 const passport = require('../middlewares/passport');
 
 router.get('/', (req, res, next) => {

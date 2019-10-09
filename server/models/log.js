@@ -5,10 +5,7 @@ module.exports = {
     getLog : async(boardId) => {
         let [rows] = await pool.query(log.getLog,[boardId]);
     
-        if (rows.length === 0){
-            return false;
-        }
-        return rows;
+        return rows.length ? rows : false;
     },
 
     addAction : async(actionObj) => {

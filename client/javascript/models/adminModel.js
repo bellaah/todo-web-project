@@ -28,12 +28,12 @@ const matchIdAndCheckbox = () => {
 }
 
 (async() => {
-    let list = await fetch('/admin/userList')
+    let users = await fetch('/admin/userList')
     .then((res) => {
         return res.json();
     })
 
     let admin = new Admin();
-    document.querySelector(".user-table").innerHTML = admin.render(list);
+    document.querySelector(".user-table").innerHTML = admin.render(users);
     checkAdminListener();
 })()

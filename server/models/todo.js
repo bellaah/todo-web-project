@@ -11,7 +11,7 @@ module.exports = {
     },
 
     addCard : async(card) => {
-        let index = await getOrderIndex(card.listId);
+        const index = await getOrderIndex(card.listId);
         pool.query(todo.insertCard,[card.listId,card.content,card.file,card.writer,index]);
     },
 
