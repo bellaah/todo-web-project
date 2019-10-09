@@ -11,7 +11,6 @@ module.exports = {
     insertUserData : async(userId,userName,userPwd) => {
         userPwd = crypto.createHash('sha512').update(userPwd).digest('base64');
         pool.query(user.insertUser, [userId,userName,userPwd]);
-        return;
     },
 
     getUser : async(userId,userPwd) => {
@@ -29,6 +28,5 @@ module.exports = {
         userList.forEach(elem => {
             pool.query(user.updateAuthority,[elem.admin,elem.id]);
         });
-        return;
     }
 }

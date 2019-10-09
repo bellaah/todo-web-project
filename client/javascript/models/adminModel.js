@@ -34,7 +34,7 @@ const matchIdAndCheckbox = () => {
         return res.json();
     })
 
-    let admin = new Admin();
+    const admin = new Admin();
     $(".user-table").innerHTML = admin.render(users);
     checkAdminListener();
 })()

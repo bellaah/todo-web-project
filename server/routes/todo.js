@@ -9,8 +9,7 @@ router.get('/:userId', async(req, res, next) => {
 });
 
 router.post('/deleteCard', (req, res, next) => {
-    console.log(req.body);
-    board.removeCard(req.body.cardId, req.body.orderIndex);
+    board.removeCard(req.body);
     res.send(true);
 });
 

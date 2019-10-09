@@ -1,14 +1,6 @@
 import BoardModel from './models/boardModel.js';
 import ColumnModel from './models/columnModel.js';
-
-const init = async() => {
-    const boardModel = new BoardModel();
-    const columnModel = new ColumnModel();
-    const boardList = await getBoardData();
-
-    await boardModel.init(boardList);
-    columnModel.init();
-}
+import ColumnView from './components/column.js';
 
 const getBoardData = async() => {
     let url = window.location.href.split('/');
@@ -24,4 +16,15 @@ const getBoardData = async() => {
     return boardList;
 }
 
-init();
+(async() => {
+    const boardModel = new BoardModel();
+    const columnModel = new ColumnModel();
+    const columnView = new ColumnView();
+    const boardList = await getBoardData();
+
+    columnView.subscribe(columnModel);
+    columnModel.subscribe(columnView);
+
+    await boardModel.init(boardList);
+    columnModel.init();
+})()

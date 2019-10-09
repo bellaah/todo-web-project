@@ -41,15 +41,10 @@ class Todo{
         return boardList;
     }
 
-    async removeCard(cardId,orderIndex){
-        console.log(cardId);
-        console.log(orderIndex);
-        await pool.query(todo.removeCard,[cardId]);
-        await this.updateOrderIndex(undefined, 'ORDER_INDEX', 
-            'ORDER_INDEX - 1', `ORDER_INDEX > ${orderIndex}`)
-        .then()
-        .catch(e => e);
-        return true;
+    async removeCard(data){
+        await pool.query(todo.removeCard,[data.cardId]);
+        await this.updateOrderIndex(data.columnId, 'ORDER_INDEX', 
+            'ORDER_INDEX - 1', `ORDER_INDEX > ${data.orderIndex}`);
     }
 
     async changeCardStatus(cardId, newColumnId, prevCardIndex){
@@ -74,16 +69,10 @@ class Todo{
             UPDATE 
                 CARD 
             SET 
-                ${target} = ${targetValue}
+                ${target} = ${targetValue} 
             WHERE 
-                ${columnId ? 'LIST_ID = ?' : 'TRUE'} AND ${whereClause}`;
-
-        try{
-            await pool.promise().query(query, [columnId]);
-            return true;
-        }catch (e){
-            throw e;
-        }
+                ${columnId ? 'LIST_ID = ?' : 'TRUE'} AND ${whereClause};`;
+        await pool.query(query, [columnId]);
     }
 
     async _moveSameColumn(card, currentOrderIndex, newOrderIndex){

@@ -1,8 +1,8 @@
 module.exports={
-    updateColumnName : `UPDATE LIST SET NAME = ? WHERE LIST_ID = ? `,
-    updateCard : `UPDATE CARD SET CONTENT = ?, EXTRA_FILE = ? WHERE CARD_ID = ? `,
-    insertCard : `INSERT INTO CARD(LIST_ID, CONTENT, EXTRA_FILE, WRITER_ID, ORDER_INDEX) VALUES(?, ?, ?, ?, ?)`,
-    getOrderIndex : `SELECT COUNT(*) AS CARD_COUNT FROM CARD WHERE LIST_ID = ?`,
+    updateColumnName : `UPDATE LIST SET NAME = ? WHERE LIST_ID = ? ;`,
+    updateCard : `UPDATE CARD SET CONTENT = ?, EXTRA_FILE = ? WHERE CARD_ID = ? ;`,
+    insertCard : `INSERT INTO CARD(LIST_ID, CONTENT, EXTRA_FILE, WRITER_ID, ORDER_INDEX) VALUES(?, ?, ?, ?, ?);`,
+    getOrderIndex : `SELECT COUNT(*) AS CARD_COUNT FROM CARD WHERE LIST_ID = ? ;`,
     removeCard : `DELETE FROM CARD WHERE CARD_ID = ?`,
     getCardById : `SELECT * FROM CARD WHERE CARD_ID = ?`,
     getList : `
@@ -23,5 +23,5 @@ module.exports={
     JOIN
         CARD
     ON
-        LIST.LIST_ID = CARD.LIST_ID`
+        LIST.LIST_ID = CARD.LIST_ID;`
 }

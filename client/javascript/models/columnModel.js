@@ -1,6 +1,7 @@
 import {$,$$,findInParentX2,findInParent} from '../src/util.js';
+import observable from '../src/observable.js';
 
-class columnModel{
+class columnModel extends observable{
     init(){
         const columnList = $$(".column");
         const textAreaTag = $$("textarea");
@@ -25,11 +26,13 @@ class columnModel{
                 let content = findInParentX2(evtTarget,"textarea");
                 let listId = evtTarget.dataset.columns;
                 this.addCard(content.value,listId);
-                content.value = ""; break;
+                content.value = ""; 
+                this.changeState({ type : "add"}); break;
             case "card-delete-btn":
-                let cardId = evtTarget.parentNode.dataset.cardId;
-                let orderIndex = evtTarget.parentNode.dataset.orderIndex;
-                this.deleteCard(cardId,orderIndex);
+                let data = evtTarget.parentNode.dataset
+                let [cardId,orderIndex,columnId] = [data.cardId,data.orderIndex,data.columns];
+                this.deleteCard(cardId,orderIndex,columnId);
+                this.changeState({ type : "delete" , cardId}); break;
         }
     }
 
@@ -72,14 +75,14 @@ class columnModel{
         });
     }
 
-    deleteCard(cardId,orderIndex){
+    deleteCard(cardId,orderIndex,columnId){
         fetch('/todo/deleteCard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             mode:"cors",
-            body: JSON.stringify({ cardId,orderIndex })
+            body: JSON.stringify({ cardId,orderIndex,columnId })
         });
     }
 

@@ -1,6 +1,8 @@
 import Card from './card.js';
+import observable from '../src/observable.js';
+import {$} from '../src/util.js';
 
-class column {
+class column extends observable{
     async render(columnId,obj){
         let cardHtml = await this.makeCard(obj.card,columnId);
         let html = `
@@ -12,7 +14,7 @@ class column {
                     <button class="column-menu-btn" data-columns="${columnId}">...</button>
                 </div>
                 <div class="add-card-div hidden" data-columns="${columnId}">
-                    <textarea name="content" data-input-max-length="500" placeholder="Enter a note"></textarea>
+                    <textarea name="content" maxlength="500" placeholder="Enter a note"></textarea>
                     <div class="add-card-btn-div">
                         <button class="add-card-green-btn disable" data-columns="${columnId}">Add</button>
                         <button class="add-cancel-btn" data-columns="${columnId}">Cancel</button>
@@ -27,6 +29,11 @@ class column {
         let card = new Card();
         let cardHtml = cardList.reduce((pre, cur) => pre + card.render(cur), '');
         return cardHtml;
+    }
+
+    update(state) {
+        console.log(state);
+        $(`.card-id-${state.cardId}`).remove();
     }
 }
 
