@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const board = require('../models/todo');
+const Todo = require('../models/todo');
+
+let board = new Todo();
 
 router.get('/:userId', async(req, res, next) => {
     res.render('board',{userId :req.params.userId});
 });
 
-router.post('/remove', (req, res, next) => {
-    board.removeCard(req.body.cardId);
+router.post('/deleteCard', (req, res, next) => {
+    console.log(req.body);
+    board.removeCard(req.body.cardId, req.body.orderIndex);
     res.send(true);
 });
 

@@ -26,6 +26,10 @@ class columnModel{
                 let listId = evtTarget.dataset.columns;
                 this.addCard(content.value,listId);
                 content.value = ""; break;
+            case "card-delete-btn":
+                let cardId = evtTarget.parentNode.dataset.cardId;
+                let orderIndex = evtTarget.parentNode.dataset.orderIndex;
+                this.deleteCard(cardId,orderIndex);
         }
     }
 
@@ -65,6 +69,17 @@ class columnModel{
             },
             mode:"cors",
             body: JSON.stringify({ content, listId })
+        });
+    }
+
+    deleteCard(cardId,orderIndex){
+        fetch('/todo/deleteCard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode:"cors",
+            body: JSON.stringify({ cardId,orderIndex })
         });
     }
 

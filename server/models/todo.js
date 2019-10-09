@@ -1,26 +1,26 @@
 const pool = require('../database/db');
 const todo = require('../database/todoTable');
 
-module.exports = {
-    updateColumnName : async(listId,newName) => {
+class Todo{
+    async updateColumnName(listId,newName){
         await pool.query(todo.updateColumnName,[newName,listId]);
-    },
+    }
 
-    updateCardContent : (cardId,content,file) => {
+    updateCardContent(cardId,content,file){
         pool.query(todo.updateCard,[content,file,cardId]);
-    },
+    }
 
-    addCard : async(card) => {
+    async addCard(card){
         const [rows] = await pool.query(todo.getOrderIndex,[card.listId]);
         let index = rows[0].CARD_COUNT;
         pool.query(todo.insertCard,[card.listId,card.content,card.file,card.writer,index]);
-    },
+    }
 
-    getOrderIndex : async(listId) => {
+    async getOrderIndex(listId){
         return (await pool.query(todo.getOrderIndex, [listId]))[0][0].CARD_COUNT;
-    },
+    }
 
-    getTodoList : async(userId) => {
+    async getTodoList(userId){
         let [rows] = await pool.query(todo.getList,[userId]);
 
         if (rows.length === 0){
@@ -39,37 +39,37 @@ module.exports = {
             }
         });
         return boardList;
-    },
+    }
 
-    removeCard : async(cardId) => {
-        pool.query(todo.removeCard,[cardId]);
-
-        await pool.promise().query(query, [cardId]);
-        await updateOrderIndex(undefined, 'ORDER_INDEX', 
+    async removeCard(cardId,orderIndex){
+        console.log(cardId);
+        console.log(orderIndex);
+        await pool.query(todo.removeCard,[cardId]);
+        await this.updateOrderIndex(undefined, 'ORDER_INDEX', 
             'ORDER_INDEX - 1', `ORDER_INDEX > ${orderIndex}`)
         .then()
         .catch(e => e);
         return true;
-    },
+    }
 
-    changeCardStatus : async(cardId, newColumnId, prevCardIndex) => {
+    async changeCardStatus(cardId, newColumnId, prevCardIndex){
         try{
             const card = (await pool.promise().query(todo.getCardById,[cardId]))[0][0];
             let currentOrderIndex = card.ORDER_INDEX;
             let newOrderIndex = prevCardIndex + 1;
 
             if (card.LIST_ID === newColumnId) {
-                await _moveSameColumn(card, currentOrderIndex, newOrderIndex);
+                await this._moveSameColumn(card, currentOrderIndex, newOrderIndex);
             }else {
-                await _moveOtherColumn(card, newColumnId, currentOrderIndex, newOrderIndex);    
+                await this._moveOtherColumn(card, newColumnId, currentOrderIndex, newOrderIndex);    
             }
-            await updateOrderIndex(newColumnId, 'ORDER_INDEX', newOrderIndex, `CARD_ID = ${card.ID}`);
+            await this.updateOrderIndex(newColumnId, 'ORDER_INDEX', newOrderIndex, `CARD_ID = ${card.ID}`);
         }catch(e){
             console.log(e);
         }
-    },
+    }
 
-    updateOrderIndex : async(columnId, target, targetValue, whereClause) => {
+    async updateOrderIndex(columnId, target, targetValue, whereClause){
         const query = `
             UPDATE 
                 CARD 
@@ -84,22 +84,24 @@ module.exports = {
         }catch (e){
             throw e;
         }
-    },
+    }
 
-    _moveSameColumn : async(card, currentOrderIndex, newOrderIndex) => {
+    async _moveSameColumn(card, currentOrderIndex, newOrderIndex){
         if (currentOrderIndex > newOrderIndex) {
-            await updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX + 1', 
+            await this.updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX + 1', 
                 `ORDER_INDEX BETWEEN ${newOrderIndex} AND ${currentOrderIndex - 1}`);
         }else{
-        await updateOrderIndex(card.LIST_ID, 'ORDER_INDEX','ORDER_INDEX - 1', 
+        await this.updateOrderIndex(card.LIST_ID, 'ORDER_INDEX','ORDER_INDEX - 1', 
                 `ORDER_INDEX BETWEEN ${currentOrderIndex + 1} AND ${newOrderIndex}`);
             newOrderIndex--;
         }
-    },
+    }
 
-    _moveOtherColumn : async(card, newColumnId, currentOrderIndex, newOrderIndex) => {
-        await updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX - 1', `ORDER_INDEX > ${currentOrderIndex}`);
-        await updateOrderIndex(newColumnId, 'ORDER_INDEX', 'ORDER_INDEX + 1', `ORDER_INDEX >= ${newOrderIndex}`);
-        await updateOrderIndex(card.LIST_ID, 'COLUMN_ID', newColumnId, `CARD_ID = ${card.ID}`);
+    async _moveOtherColumn(card, newColumnId, currentOrderIndex, newOrderIndex){
+        await this.updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX - 1', `ORDER_INDEX > ${currentOrderIndex}`);
+        await this.updateOrderIndex(newColumnId, 'ORDER_INDEX', 'ORDER_INDEX + 1', `ORDER_INDEX >= ${newOrderIndex}`);
+        await this.updateOrderIndex(card.LIST_ID, 'COLUMN_ID', newColumnId, `CARD_ID = ${card.ID}`);
     }
 }
+
+module.exports = Todo;
