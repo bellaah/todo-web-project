@@ -4,7 +4,7 @@ import ColumnModel from './models/columnModel.js';
 const start = async() => {
     const boardModel = new BoardModel();
     const columnModel = new ColumnModel();
-    const boardList = getBoardData();
+    const boardList = await getBoardData();
 
     await boardModel.init(boardList);
     columnModel.registerEventListener();
@@ -23,4 +23,5 @@ const getBoardData = async() => {
     .then(res => res.json());
     return boardList;
 }
+
 start();

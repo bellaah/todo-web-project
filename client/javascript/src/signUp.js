@@ -1,8 +1,6 @@
-import {$,$$} from './util.js';
-
 const idChecker = {
     registerEvent(){
-        const idInput =$("#id_input");
+        const idInput =document.querySelector("#id_input");
         idInput.addEventListener("input", () => {
             this.idCheck(idInput.value);
         })
@@ -11,7 +9,7 @@ const idChecker = {
         })
     },
     idCheck(idInput){
-        const idSpan = $("#id_check");
+        const idSpan = document.querySelector("#id_check");
         const idRegExp = /^[A-Za-z0-9-_]{5,20}$/;
 
         if(!idRegExp.test(idInput)){
@@ -21,7 +19,7 @@ const idChecker = {
         }
     },
     duplicateCheck(idInput){
-        const idSpan = $("#id_check");
+        const idSpan = document.querySelector("#id_check");
         fetch('/signUp/duplicateCheck', {
             method: 'post',
             headers: {
@@ -41,8 +39,8 @@ const idChecker = {
 
 const pwdChecker= {
     registerEvent(){
-        const pwdInput = $("#pwd_input");
-        const pwdConfirmInput = $("#pwd_confirm_input");
+        const pwdInput = document.querySelector("#pwd_input");
+        const pwdConfirmInput = document.querySelector("#pwd_confirm_input");
         pwdInput.addEventListener("input", () => {
             this.pwdCheck(pwdInput);
             if(pwdConfirmInput.value !== ''){
@@ -69,7 +67,7 @@ const pwdChecker= {
         }
     },
     pwdConfirmCheck(pwdConfirmInput,pwdInput){
-        const pwdConfirmSpan = $("#pwd_confirm_check");
+        const pwdConfirmSpan = document.querySelector("#pwd_confirm_check");
         if(pwdConfirmInput.value !== pwdInput.value){
             changeAttribute(pwdConfirmSpan,"red_text","비밀번호가 일치하지 않습니다.");
         }else{
@@ -80,13 +78,13 @@ const pwdChecker= {
 
 const nameChecker = {
     registerEvent(){
-        const nameInput = $("#name_input");
+        const nameInput = document.querySelector("#name_input");
         nameInput.addEventListener("input", () => {
             this.nameCheck(nameInput);
         })
     },
     nameCheck(nameInput){
-        const nameSpan = $("#name_check");
+        const nameSpan = document.querySelector("#name_check");
         if(nameInput.value == ""){
             changeAttribute(nameSpan,"red_text","");
         }else{

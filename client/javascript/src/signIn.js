@@ -1,9 +1,7 @@
-import {$,$$} from './util.js';
-
 const isUser = async() => {
-    const idInput = $("#login_id_input");
-    const pwdInput = $("#login_pwd_input");
-    const errorMsg = $("#red_text");
+    const idInput = document.querySelector("#login_id_input");
+    const pwdInput = document.querySelector("#login_pwd_input");
+    const errorMsg = document.querySelector("#red_text");
 
     if(idInput.value == "" || pwdInput.value == ""){
         errorMsg.style.display = 'inline';

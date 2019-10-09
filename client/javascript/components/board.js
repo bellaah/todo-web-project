@@ -1,5 +1,5 @@
 import Column from './column.js';
-import {$,$$} from '../models/util';
+import {$} from '../src/util.js';
 
 class board{
     async render(boardList){

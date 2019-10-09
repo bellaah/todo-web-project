@@ -1,11 +1,3 @@
-const $ = (name) => {
-    return document.querySelector(name);
-}
-
-const $$ = (name) => {
-    return document.querySelectorAll(name);
-}
-
 const focusIn = () => {
     tagDiv.style.borderColor='#2cb400';
 }
@@ -68,5 +60,3 @@ const checkInputAll = () => {
     })
     return redList;
 }
-
-export {$,$$};

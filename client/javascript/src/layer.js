@@ -1,10 +1,8 @@
-import {$,$$} from './util.js';
-
-const layerDiv =  $(".pop_layer");
-const backgroundDiv = $("#backgound_div");
-const layerHead =  $("#layer_head");
-const layerText = $("#layer_text");
-const layerBtnDiv = $("#layer_btn");
+const layerDiv =  document.querySelector(".pop_layer");
+const backgroundDiv = document.querySelector("#backgound_div");
+const layerHead =  document.querySelector("#layer_head");
+const layerText = document.querySelector("#layer_text");
+const layerBtnDiv = document.querySelector("#layer_btn");
 
 
 const popLayer = () => {
