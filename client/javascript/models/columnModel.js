@@ -1,26 +1,31 @@
 import {$,$$,findInParentX2,findInParent} from '../src/util.js';
 
 class columnModel{
-    registerEventListener(){
+    init(){
         const columnList = $$(".column");
         const textAreaTag = $$("textarea");
 
-        columnList.forEach(column => {
-            column.addEventListener("click",(evt) => {
-                if(evt.target.className === "add-card-btn") {
-                    this.clickPlusBtn(evt.target);
-                }else if(evt.target.className === "add-cancel-btn"){
-                    this.clickCancelBtn(evt.target);
-                }
-            }); 
-        });
+        this.registerEvent(columnList,"click",this.clickEvent);
+        this.registerEvent(textAreaTag,"input",this.inputEvent);
+    }
 
-        textAreaTag.forEach(textArea => {
-            textArea.addEventListener("input",(evt) => {
-                let isEmpty = textArea.value == "" ? true : false;
-                this.enterText(evt.target,isEmpty);
-            });
+    registerEvent(list,event,func){
+        list.forEach(elem => {
+            elem.addEventListener(event,(evt) => func.bind(this)(evt));
         });
+    }
+
+    clickEvent(evt){
+        if(evt.target.className === "add-card-btn") {
+            this.clickPlusBtn(evt.target);
+        }else if(evt.target.className === "add-cancel-btn"){
+            this.clickCancelBtn(evt.target);
+        }
+    }
+
+    inputEvent(evt){
+        let isEmpty = textArea.value == "" ? true : false;
+        this.enterText(evt.target,isEmpty);
     }
 
     clickPlusBtn(evtTarget){

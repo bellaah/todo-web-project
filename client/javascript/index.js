@@ -1,13 +1,13 @@
 import BoardModel from './models/boardModel.js';
 import ColumnModel from './models/columnModel.js';
 
-const start = async() => {
+const init = async() => {
     const boardModel = new BoardModel();
     const columnModel = new ColumnModel();
     const boardList = await getBoardData();
 
     await boardModel.init(boardList);
-    columnModel.registerEventListener();
+    columnModel.init();
 }
 
 const getBoardData = async() => {
@@ -24,4 +24,4 @@ const getBoardData = async() => {
     return boardList;
 }
 
-start();
+init();
