@@ -1,30 +1,24 @@
-import BoardModel from './models/boardModel.js';
+import BoardView from './components/board.js';
 import ColumnModel from './models/columnModel.js';
 import ColumnView from './components/column.js';
+import {fetchData} from './src/util.js';
 
 const getBoardData = async() => {
     let url = window.location.href.split('/');
-    let boardList = await fetch('/todo/getBoard', {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId : url[url.length-1] })
-    })
-    .then(res => res.json());
+    let boardList = await fetchData('/todo/getBoard','POST',{ userId : url[url.length-1] });
     return boardList;
 }
 
 (async() => {
-    const boardModel = new BoardModel();
-    const columnModel = new ColumnModel();
-    const columnView = new ColumnView();
     const boardList = await getBoardData();
+    
+    const boardView = new BoardView();
+    const columnView = new ColumnView();
+    const columnModel = new ColumnModel();
 
     columnView.subscribe(columnModel);
     columnModel.subscribe(columnView);
 
-    await boardModel.init(boardList);
-    columnModel.init();
+    await boardView.render(boardList);
+    columnView.init();
 })()

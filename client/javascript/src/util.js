@@ -14,4 +14,20 @@ const findInParent = (target,name) => {
     return target.parentNode.querySelector(name);
 }
 
-export {$,$$,findInParentX2,findInParent};
+const fetchData = async(url,method,body) => {
+    if(method === "GET"){
+        return await fetch(url).then(res => res.json());
+    }else{
+        return await fetch(url, {
+            method ,
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        .then(res => res.json());
+    }
+}
+
+export {$,$$,findInParentX2,findInParent,fetchData};

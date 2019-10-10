@@ -1,17 +1,10 @@
 import Admin from '../components/admin.js';
-import {$,$$} from '../src/util.js';
+import {$,$$,fetchData} from '../src/util.js';
 
 const checkAdminListener = () => {
     let saveBtn = $(".save-btn");
-    saveBtn.addEventListener("click",(evt)=>{
-        fetch('/admin/updateAuth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode:"cors",
-            body: JSON.stringify(matchIdAndCheckbox())
-        });
+    saveBtn.addEventListener("click",(evt) => {
+        fetchData('/admin/updateAuth','POST',matchIdAndCheckbox());
     });
 }
 
@@ -29,10 +22,7 @@ const matchIdAndCheckbox = () => {
 }
 
 (async() => {
-    let users = await fetch('/admin/userList')
-    .then((res) => {
-        return res.json();
-    })
+    let users = await fetchData('/admin/userList',"GET");
 
     const admin = new Admin();
     $(".user-table").innerHTML = admin.render(users);
