@@ -14,4 +14,24 @@
         </section>
     </body>
     <script type="module" src="/javascript/index.js"></script>
+    <script>
+        function dragstart_handler(ev) {
+            // 데이터 전달 객체에 대상 요소의 id를 추가합니다.
+            ev.target.classList.add("disable");
+            ev.dataTransfer.setData("text/plain", ev.target.id);
+            console.log(ev.target.id);
+            ev.dataTransfer.dropEffect = "copy";
+        }
+        function dragover_handler(ev) {
+            ev.preventDefault();
+        }
+        function drop_handler(ev) {
+            ev.preventDefault();
+            // 대상의 id를 가져와 대상 DOM에 움직인 요소를 추가합니다.
+            let data = ev.dataTransfer.getData("text");
+            let card = document.querySelector(`#${data}`);
+            card.classList.remove("disable");
+            ev.target.appendChild(card);
+        }
+    </script>
 </html>

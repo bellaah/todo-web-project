@@ -11,7 +11,8 @@ class column extends observable{
     async render(columnId,obj){
         let cardHtml = await this.makeCard(obj.card,columnId);
         let html = `
-            <div class="column column-id-${columnId}" data-columns="${columnId}">
+            <div class="column" id="column-${columnId}" data-columns="${columnId}"
+                ondrop="drop_handler(event);" ondragover="dragover_handler(event);">
                 <div class="column-head">
                     <span class="card-count-btn">${obj.card.length}</span>
                     <span class="column-name">${obj.name}</span>
@@ -37,10 +38,15 @@ class column extends observable{
 
     async update(state) {
         if(state.type === "delete"){
-            $(`.card-id-${state.cardId}`).remove();
+            let card = $(`#card-${state.cardId}`);
+            let count = card.parentNode.querySelector(".card-count-btn");
+            count.innerText = parseInt(count.innerText)-1;
+            card.remove();
         }else{
-            const curColumn = $(`.column-id-${state.LIST_ID}`);
+            let curColumn = $(`#column-${state.LIST_ID}`);
             let cardHtml = await this.card.render(state);
+            let count = curColumn.querySelector(".card-count-btn");
+            count.innerText = parseInt(count.innerText)+1;
             curColumn.insertAdjacentHTML('beforeend',cardHtml);
         }
     }
