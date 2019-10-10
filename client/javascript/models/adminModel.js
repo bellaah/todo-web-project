@@ -12,7 +12,7 @@ const matchIdAndCheckbox = () => {
     let idCheckboxList = [];
     let userList = $$("tbody > tr");
     userList.forEach(elem => {
-        let userElment = $("input");
+        let userElment = elem.querySelector("input");
         idCheckboxList.push({
            id : userElment.id,
            admin : userElment.checked ? 10 : 0

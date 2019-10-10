@@ -8,17 +8,17 @@ router.get('/', (req, res, next) => {
 
 router.post('/submit',
     passport.authenticate('local',{
-        successRedirect: '/signIn/fail',
-        failureRedirect: '/signIn/success'
+        successRedirect: '/signIn/success',
+        failureRedirect: '/signIn/fail'
     })
 );
 
 router.get('/fail', (req,res) => {
-    res.send(true);
+    res.send(false);
 });
 
 router.get('/success', (req,res) => {
-    res.send(false);
+    res.send(true);
 });
 
 

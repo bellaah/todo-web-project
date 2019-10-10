@@ -18,10 +18,12 @@ passport.use(new LocalStrategy(
   },
   async(username, password, done) => {
     let isUser = await user.getUser(username,password);
-    if(!isUser){
-        return done(null, false);
+    if(isUser){
+        console.log("OK");
+        return done(null,{ "id" :isUser.ID, "auth" :isUser.AUTHORITY});
     }else{
-        return done(null,{ "id" :isUser.id, "auth" :isUser.auth});
+        console.log("x");
+        return done(null, false);
     }
   }
 ));

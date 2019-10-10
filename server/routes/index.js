@@ -1,5 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('../middlewares/passport');
+
+router.get('/', (req, res, next) => {
+    if(req.isAuthenticated()){
+      res.redirect(`/todo/${req.session.passport.user.id}`);
+    }else{
+    res.render('signIn');
+    }
+});
 
 router.get('/logout', (req, res, next) => {
   req.logOut();
@@ -7,10 +16,6 @@ router.get('/logout', (req, res, next) => {
   req.session.save(() => {
     res.redirect('/');
   });
-});
-
-router.get('/board', (req, res, next) => {
-  res.render('board');
 });
 
 module.exports = router;

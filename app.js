@@ -19,6 +19,23 @@ const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 
 const client = redis.createClient(6379,'localhost');
+app.use(express.static(path.join(__dirname, 'client')));
+app.use(session(
+  {
+      secret: 'secret_key',
+      cookie: {
+        secure: false
+      },
+      store: new redisStore({
+        client : client,
+        ttl : 260
+      }),
+      saveUninitialized: false, 
+      resave: false
+  }
+));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('views', path.join(__dirname, '/server/views'));
 app.set('view engine', 'ejs');
@@ -36,25 +53,6 @@ app.use(sassMiddleware({
   outputStyle: 'compressed',
   prefix: '/style',
 }));
-
-app.use(session(
-  {
-      secret: 'secret_key',
-      cookie: {
-        secure: false
-      },
-      store: new redisStore({
-        client : client,
-        ttl : 260
-      }),
-      saveUninitialized: false, 
-      resave: false
-  }
-));
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'client')));
 
 app.use('/', indexRouter);
 app.use('/signUp', signUpRouter);

@@ -7,11 +7,7 @@ class columnModel extends observable{
     }
 
     async update(func,data){
-        if(func === "addCard"){
-            this.addCard(data);
-        }else{
-            this.deleteCard(data);
-        }
+        func === "addCard" ? this.addCard(data) : this.deleteCard(data);
     }
     
     async addCard({content,listId}){
