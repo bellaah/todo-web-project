@@ -11,11 +11,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/logout', (req, res, next) => {
-  req.logOut();
-  res.clearCookie('connect.sid');
-  req.session.save(() => {
-    res.redirect('/');
-  });
+    req.logOut();
+    res.clearCookie('connect.sid');
+    req.session.save(() => {
+      res.redirect('/');
+    });
 });
 
 module.exports = router;

@@ -1,7 +1,8 @@
+import observable from '../src/observable.js';
 import Column from './column.js';
 import {$,$$} from '../src/util.js';
 
-class board{
+class board extends observable{
     async render(boardList){
         let board = $(".board");
 
@@ -34,7 +35,7 @@ class board{
             });
         
             column.addEventListener("drop", (event) => {
-                this.dropEvent(event,targetID);
+                this.dropEvent(event,column,targetID);
             });
         });
     }
@@ -53,12 +54,30 @@ class board{
         }
     }
 
-    dropEvent(event,targetID){
+    async dropEvent(event,column,targetID){
         event.preventDefault();
-        console.log(event.target);
-        let data = targetID;
-        let card = document.querySelector(`#${data}`);
+        let card = document.querySelector(`#${targetID}`);
         card.classList.remove("disable");
+
+        let cardData = {
+            prevCardIndex : card.previousElementSibling.dataset.orderIndex,
+            cardId : card.dataset.cardId,
+            newColumnId : column.dataset.columns
+        };
+
+        this.updateCardCount(cardData.newColumn,true);
+        this.updateCardCount(card.dataset.columns,false);
+
+        card.dataset.columns = cardData.newColumn;
+        console.log(cardData.prevCardIndex);
+
+        this.changeState("moveInOtherColumn",cardData); 
+    }
+
+    async updateCardCount(columnNumber,isPlus){
+        let column = $(`#column-${columnNumber}`);
+        let count = column.querySelector(".card-count-btn");
+        count.innerText = isPlus ? parseInt(count.innerText)+1 : parseInt(count.innerText)-1;
     }
 
 }

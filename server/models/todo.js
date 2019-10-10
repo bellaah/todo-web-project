@@ -65,24 +65,26 @@ class Todo{
             'ORDER_INDEX - 1', `ORDER_INDEX > ${data.orderIndex}`);
     }
 
-    async changeCardStatus(cardId, newColumnId, prevCardIndex){
+    async changeCardStatus({cardId, newColumnId, prevCardIndex}){
         try{
-            const card = (await pool.promise().query(todo.getCardById,[cardId]))[0][0];
-            let currentOrderIndex = card.ORDER_INDEX;
-            let newOrderIndex = prevCardIndex + 1;
+            const [rows] = (await pool.query(todo.getCardById,[cardId]))[0];
+            let currentOrderIndex = rows.ORDER_INDEX;
+            let newOrderIndex = parseInt(prevCardIndex) + 1;
 
-            if (card.LIST_ID === newColumnId) {
-                await this._moveSameColumn(card, currentOrderIndex, newOrderIndex);
+            if (rows.LIST_ID === newColumnId) {
+                console.log(1);
+                await this._moveSameColumn(rows, currentOrderIndex, newOrderIndex);
             }else {
-                await this._moveOtherColumn(card, newColumnId, currentOrderIndex, newOrderIndex);    
+                console.log(2);
+                await this._moveOtherColumn(rows, newColumnId, currentOrderIndex, newOrderIndex);    
             }
-            await this.updateOrderIndex(newColumnId, 'ORDER_INDEX', newOrderIndex, `CARD_ID = ${card.ID}`);
+            await this.updateOrderIndex(newColumnId, 'ORDER_INDEX', newOrderIndex, `CARD_ID = ${rows.CARD_ID}`);
         }catch(e){
             console.log(e);
         }
     }
 
-    async updateOrderIndex(columnId, target, targetValue, whereClause){
+    async updateOrderIndex(columnId, target, targetValue, whereClause = 'TRUE'){
         const query = `
             UPDATE 
                 CARD 
@@ -107,7 +109,7 @@ class Todo{
     async _moveOtherColumn(card, newColumnId, currentOrderIndex, newOrderIndex){
         await this.updateOrderIndex(card.LIST_ID, 'ORDER_INDEX', 'ORDER_INDEX - 1', `ORDER_INDEX > ${currentOrderIndex}`);
         await this.updateOrderIndex(newColumnId, 'ORDER_INDEX', 'ORDER_INDEX + 1', `ORDER_INDEX >= ${newOrderIndex}`);
-        await this.updateOrderIndex(card.LIST_ID, 'COLUMN_ID', newColumnId, `CARD_ID = ${card.ID}`);
+        await this.updateOrderIndex(card.LIST_ID, 'LIST_ID', newColumnId, `CARD_ID = ${card.CARD_ID}`);
     }
 }
 

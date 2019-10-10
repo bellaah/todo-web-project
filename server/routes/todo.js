@@ -6,7 +6,12 @@ const user = require('../models/users');
 let board = new Todo();
 
 router.get('/:userId', async(req, res, next) => {
-    res.render('board',{userId :req.params.userId});
+    let isUser = await user.getUserId(req.params.userId);
+    if(isUser){
+        res.render('board',{userId :req.params.userId});
+    }else{
+        res.redirect('/');
+    }
 });
 
 router.post('/deleteCard', (req, res, next) => {
@@ -32,18 +37,13 @@ router.post('/addCard', async(req, res, next) => {
 });
 
 router.post('/moveCard', async(req, res, next) => {
-    await board.changeCardStatus(req.body.cardId,
-        req.body.newColumnId,req.body.prevCardIndex); 
+    await board.changeCardStatus(req.body); 
     res.send(true);
 });
 
 router.post('/getBoard', async(req, res, next) => {
-    if(user.getUserId(req.body.userId)){
-        let todoList = await board.getTodoList(req.body.userId);
-        res.send(todoList);
-    }else{
-        res.redirect('/');
-    }
+    let todoList = await board.getTodoList(req.body.userId);
+    res.send(todoList);
 });
 
 module.exports = router;

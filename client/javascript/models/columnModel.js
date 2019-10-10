@@ -21,5 +21,4 @@ class columnModel extends observable{
 
 }
 
-
 export default columnModel;
