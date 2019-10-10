@@ -6,6 +6,10 @@ module.exports={
     removeCard : `DELETE FROM CARD WHERE CARD_ID = ?`,
     getCardById : `SELECT * FROM CARD WHERE CARD_ID = ?`,
     getLastCard : `SELECT * FROM CARD WHERE CARD_ID = (SELECT MAX(CARD_ID) FROM CARD);`,
+    getBoardIdByUserId : `SELECT BOARD_ID FROM BOARD WHERE USER_ID = ?`,
+    insertNewColumn : `INSERT INTO LIST (BOARD_ID,NAME) VALUES (?,?);`,
+    insertNewBoard: 'INSERT INTO BOARD (USER_ID) VALUES (?);',
+    getEmptyList: 'SELECT * FROM LIST WHERE BOARD_ID = (SELECT BOARD_ID FROM BOARD WHERE USER_ID = ?)',
     getList : `
     SELECT
         LIST.NAME AS LIST_NAME,

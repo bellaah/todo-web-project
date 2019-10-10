@@ -6,7 +6,7 @@ router.get('/', (req, res, next) => {
     if(req.isAuthenticated()){
       res.redirect(`/todo/${req.session.passport.user.id}`);
     }else{
-    res.render('signIn');
+      res.render('signIn');
     }
 });
 

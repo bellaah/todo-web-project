@@ -21,8 +21,8 @@ const customReset = () => {
 }
 
 const resetSpan = () => {
-    const redSpan = $$(".red_text");
-    const greenSpan = $$(".green_text");
+    const redSpan = document.querySelectorAll(".red_text");
+    const greenSpan = document.querySelectorAll(".green_text");
 
     redSpan.forEach(elem => {
         elem.innerHTML = "";
@@ -48,7 +48,7 @@ const checkAll = () => {
 }
 
 const checkInputAll = () => {
-    const redSpan =  $$(".red_text");
+    const redSpan =  document.querySelectorAll(".red_text");
     let errorText = {id_check : "아이디를 형식에 맞게 입력해주세요.",
                     pwd_check : "비밀번호를 형식에 맞게 입력해주세요.",
                     pwd_confirm_check : "비밀번호가 일치하지 않습니다.",

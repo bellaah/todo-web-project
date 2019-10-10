@@ -17,8 +17,11 @@ const passport = require('./server/middlewares/passport');
 const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
-
 const client = redis.createClient(6379,'localhost');
+
+app.set('views', path.join(__dirname, '/server/views'));
+app.set('view engine', 'ejs');
+
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(session(
   {
@@ -36,10 +39,6 @@ app.use(session(
 ));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.set('views', path.join(__dirname, '/server/views'));
-app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Todo = require('../models/todo');
+const user = require('../models/users');
 
 let board = new Todo();
 
@@ -37,8 +38,12 @@ router.post('/moveCard', async(req, res, next) => {
 });
 
 router.post('/getBoard', async(req, res, next) => {
-    let todoList = await board.getTodoList(req.body.userId);
-    res.send(todoList);
+    if(user.getUserId(req.body.userId)){
+        let todoList = await board.getTodoList(req.body.userId);
+        res.send(todoList);
+    }else{
+        res.redirect('/');
+    }
 });
 
 module.exports = router;

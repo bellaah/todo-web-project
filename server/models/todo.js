@@ -6,6 +6,14 @@ class Todo{
         await pool.query(todo.updateColumnName,[newName,listId]);
     }
 
+    async insertNewUserBoard(userId){
+        await pool.query(todo.insertNewBoard, [userId]);
+        let [rows]= await pool.query(todo.getBoardIdByUserId,[userId]);
+        await pool.query(todo.insertNewColumn, [rows[0].BOARD_ID,"todo"]);
+        await pool.query(todo.insertNewColumn, [rows[0].BOARD_ID,"doing"]);
+        await pool.query(todo.insertNewColumn, [rows[0].BOARD_ID,"done"]);
+    }
+
     updateCardContent(cardId,content,file){
         pool.query(todo.updateCard,[content,file,cardId]);
     }
@@ -25,20 +33,24 @@ class Todo{
     async getOrderIndex(listId){
         return (await pool.query(todo.getOrderIndex, [listId]))[0][0].CARD_COUNT;
     }
-
+   
     async getTodoList(userId){
         let [rows] = await pool.query(todo.getList,[userId]);
-
         if (rows.length === 0){
-            return false;
+            [rows] = await pool.query(todo.getEmptyList,[userId]);
+            return this.makeBoardList(true,rows);
+        }else{
+            return this.makeBoardList(false,rows);
         }
+    }
 
+    makeBoardList(isEmptyColumn,rows){
         let boardList = {};
         rows.forEach(elem => {
             if(boardList[elem.LIST_ID] == undefined){
                 boardList[elem.LIST_ID] = {
-                    "name" : elem.LIST_NAME,
-                    "card" : [elem]
+                    "name" : isEmptyColumn ? elem.NAME : elem.LIST_NAME,
+                    "card" : isEmptyColumn ? [] : [elem]
                 };
             }else{
                 boardList[elem.LIST_ID].card.push(elem);

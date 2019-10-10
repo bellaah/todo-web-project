@@ -93,8 +93,7 @@ class column extends observable{
     async render(columnId,column){
         let cardHtml = await this.makeCard(column.card,columnId);
         let html = `
-            <div class="column" id="column-${columnId}" data-columns="${columnId}"
-                ondrop="drop_handler(event);" ondragover="dragover_handler(event);">
+            <div class="column" id="column-${columnId}" data-columns="${columnId}" >
                 <div class="column-head">
                     <span class="card-count-btn">${column.card.length}</span>
                     <span class="column-name">${column.name}</span>

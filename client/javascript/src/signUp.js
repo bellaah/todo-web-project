@@ -52,7 +52,7 @@ const pwdChecker= {
         })
     },
     pwdCheck(pwdInput){
-        const pwdSpan = $("#pwd_check");
+        const pwdSpan = document.querySelector("#pwd_check");
 
         if(pwdInput.value.length < 8 || pwdInput.value.length > 17){
             changeAttribute(pwdSpan,"red_text","8자 이상 16자 이하로 입력해주세요.");
