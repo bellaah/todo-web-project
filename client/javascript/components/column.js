@@ -10,9 +10,9 @@ class column extends observable{
 
     async update(type,data){
         if(type === "addCard"){
-            let curColumn = $(`#column-${data.LIST_ID}`);
+            const curColumn = $(`#column-${data.LIST_ID}`);
             let cardHtml = await this.card.render(data);
-            let count = curColumn.querySelector(".card-count-btn");
+            const count = curColumn.querySelector(".card-count-btn");
             count.innerText = parseInt(count.innerText)+1;
             curColumn.insertAdjacentHTML('beforeend',cardHtml);
         }
@@ -33,7 +33,8 @@ class column extends observable{
     }
 
     async clickEvent(evtTarget){
-        switch(evtTarget.className.split(" ")[0]){
+        const firstClassName = evtTarget.className.split(" ")[0];
+        switch(firstClassName){
             case "add-card-btn":
                 this.clickPlusBtn(evtTarget); break;
             case "add-cancel-btn":
@@ -46,11 +47,12 @@ class column extends observable{
     }
 
     deleteCard(evtTarget){
-        let data = evtTarget.parentNode.dataset;
-        let [cardId,orderIndex,columnId] = [data.cardId,data.orderIndex,data.columns];
+        const data = evtTarget.parentNode.dataset;
+        const {cardId,orderIndex} = data;
+        const columnId  = data.columns;
         this.changeState("deleteCard",{cardId, orderIndex, columnId}); 
-        let card = $(`#card-${cardId}`);
-        let count = card.parentNode.querySelector(".card-count-btn");
+        const card = $(`#card-${cardId}`);
+        const count = card.parentNode.querySelector(".card-count-btn");
         count.innerText = parseInt(count.innerText)-1;
         card.remove();
     }
@@ -63,7 +65,7 @@ class column extends observable{
     }
 
     inputEvent(evtTarget){
-        let isEmpty = evtTarget.value == "" ? true : false;
+        const isEmpty = !evtTarget.value;
         this.enterText(evtTarget,isEmpty);
     }
 

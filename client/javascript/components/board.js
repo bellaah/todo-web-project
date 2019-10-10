@@ -4,19 +4,19 @@ import {$,$$} from '../src/util.js';
 
 class board extends observable{
     async render(boardList){
-        let board = $(".board");
+        const board = $(".board");
 
         let column = new Column();
         for (let columnId in boardList) {
             let html = await column.render(columnId,boardList[columnId]);
-            await board.insertAdjacentHTML('beforeend',html);
+            board.insertAdjacentHTML('beforeend',html);
         }
         this.dragEventListener();
     }
 
     dragEventListener(){
-        let cardList = $$(".card");
-        let columnList = $$(".column");
+        const cardList = $$(".card");
+        const columnList = $$(".column");
         let targetID;
 
         cardList.forEach(card => {
@@ -48,15 +48,17 @@ class board extends observable{
 
     dragEnterEvent(event,targetID){
         if( event.target.className == "column" ) {
-            event.target.insertAdjacentElement('beforeend', $(`#${targetID}`));
+            event.target.insertAdjacentElement('beforeend', $(`#${targetID}`)); 
+            return;
         }else if( event.target.className == "card" ){
             event.target.insertAdjacentElement('beforebegin', $(`#${targetID}`));
+            return;
         }
     }
 
     async dropEvent(event,column,targetID){
         event.preventDefault();
-        let card = document.querySelector(`#${targetID}`);
+        const card = document.querySelector(`#${targetID}`);
         card.classList.remove("disable");
         let prevElement = card.previousElementSibling;
 
@@ -74,9 +76,9 @@ class board extends observable{
     }
 
     async updateCardCount(columnNumber,isPlus){
-        let column = $(`#column-${columnNumber}`);
-        let count = column.querySelector(".card-count-btn");
-        count.innerText = isPlus ? parseInt(count.innerText)+1 : parseInt(count.innerText)-1;
+        const column = $(`#column-${columnNumber}`);
+        const count = column.querySelector(".card-count-btn");
+        count.innerText = parseInt(count.innerText) + ( isPlus ? 1 : -1 );
     }
 
 }

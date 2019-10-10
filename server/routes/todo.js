@@ -7,7 +7,9 @@ let board = new Todo();
 let userID;
 
 router.get('/:userId', async(req, res, next) => {
-    userID = req.session.passport.user.id;
+    if(req.isAuthenticated()){
+        userID = req.session.passport.user.id;
+    }
     let isUser = await user.getUserId(req.params.userId);
     if(isUser){
         res.render('board',{userId :req.params.userId});

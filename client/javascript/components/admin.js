@@ -1,8 +1,9 @@
 class admin {
     render(users){
         const reducer = (acc, curUser) => {
-            if (curUser.AUTHORITY >= 99) return acc;
-                return acc + this.childTemplate(curUser);
+            if (curUser.AUTHORITY >= 99) 
+                return acc;
+            return acc + this.childTemplate(curUser);
           };
       
           const childHtml = users.reduce(reducer, '');
