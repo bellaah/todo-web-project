@@ -4,8 +4,10 @@ const Todo = require('../models/todo');
 const user = require('../models/users');
 
 let board = new Todo();
+let userID;
 
 router.get('/:userId', async(req, res, next) => {
+    userID = req.session.passport.user.id;
     let isUser = await user.getUserId(req.params.userId);
     if(isUser){
         res.render('board',{userId :req.params.userId});
@@ -32,6 +34,7 @@ router.post('/updateCard', (req, res, next) => {
 });
 
 router.post('/addCard', async(req, res, next) => {
+    req.body.writer = userID;
     let card = await board.addCard(req.body);
     res.send(card);
 });

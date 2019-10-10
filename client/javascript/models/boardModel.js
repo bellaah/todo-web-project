@@ -6,20 +6,16 @@ class boardModel extends observable{
         super();
     }
 
-    //moveInSameColumn,moveInOtherColumn
     async update(func,data){
-        func === "moveInOtherColumn" ? this.moveInOtherColumn(data) : this.moveInSameColumn(data);
+        if(func === "move"){
+            this.moveInOtherColumn(data);
+        }
     }
     
     async moveInOtherColumn(data){
         let card = await fetchData('/todo/moveCard','POST',data);
         
     }
-
-    async moveInSameColumn({cardId, orderIndex, columnId}){
-        await fetchData('/todo/deleteCard','POST',{ cardId , orderIndex,columnId });
-    }
-
 }
 
 

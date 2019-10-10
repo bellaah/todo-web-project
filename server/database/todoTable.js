@@ -28,5 +28,6 @@ module.exports={
     JOIN
         CARD
     ON
-        LIST.LIST_ID = CARD.LIST_ID;`
+        LIST.LIST_ID = CARD.LIST_ID
+    ORDER BY ORDER_INDEX ASC;`
 }

@@ -7,10 +7,6 @@ module.exports = {
         let [rows] = await pool.query(user.getAllUser);
         return rows.length ? rows : false;
     },
-    isUser : async(userId) => {
-        let [rows] = await pool.query(user.isUser,[userId]);
-        return rows.length ? rows : false;
-    },
 
     insertUserData : async(userId,userName,userPwd) => {
         userPwd = crypto.createHash('sha512').update(userPwd).digest('base64');

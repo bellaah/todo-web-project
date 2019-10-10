@@ -71,11 +71,9 @@ class Todo{
             let currentOrderIndex = rows.ORDER_INDEX;
             let newOrderIndex = parseInt(prevCardIndex) + 1;
 
-            if (rows.LIST_ID === newColumnId) {
-                console.log(1);
+            if (rows.LIST_ID === parseInt(newColumnId)) {
                 await this._moveSameColumn(rows, currentOrderIndex, newOrderIndex);
             }else {
-                console.log(2);
                 await this._moveOtherColumn(rows, newColumnId, currentOrderIndex, newOrderIndex);    
             }
             await this.updateOrderIndex(newColumnId, 'ORDER_INDEX', newOrderIndex, `CARD_ID = ${rows.CARD_ID}`);

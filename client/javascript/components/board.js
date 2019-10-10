@@ -58,20 +58,19 @@ class board extends observable{
         event.preventDefault();
         let card = document.querySelector(`#${targetID}`);
         card.classList.remove("disable");
+        let prevElement = card.previousElementSibling;
 
         let cardData = {
-            prevCardIndex : card.previousElementSibling.dataset.orderIndex,
+            prevCardIndex : prevElement.classList.contains("add-card-div") ? -1 : prevElement.dataset.orderIndex,
             cardId : card.dataset.cardId,
             newColumnId : column.dataset.columns
         };
 
-        this.updateCardCount(cardData.newColumn,true);
+        this.updateCardCount(cardData.newColumnId,true);
         this.updateCardCount(card.dataset.columns,false);
 
-        card.dataset.columns = cardData.newColumn;
-        console.log(cardData.prevCardIndex);
-
-        this.changeState("moveInOtherColumn",cardData); 
+        card.dataset.columns = cardData.newColumnId;
+        this.changeState("move",cardData); 
     }
 
     async updateCardCount(columnNumber,isPlus){
