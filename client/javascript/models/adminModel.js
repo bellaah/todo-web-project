@@ -2,7 +2,7 @@ import Admin from '../components/admin.js';
 import {$,$$,fetchData} from '../src/util.js';
 
 const checkAdminListener = () => {
-    let saveBtn = $(".save-btn");
+    const saveBtn = $(".save-btn");
     saveBtn.addEventListener("click",(evt) => {
         fetchData('/admin/updateAuth','POST',matchIdAndCheckbox());
     });
@@ -10,7 +10,7 @@ const checkAdminListener = () => {
 
 const matchIdAndCheckbox = () => {
     let idCheckboxList = [];
-    let userList = $$("tbody > tr");
+    const userList = $$("tbody > tr");
     userList.forEach(elem => {
         let userElment = elem.querySelector("input");
         idCheckboxList.push({
