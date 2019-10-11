@@ -36,7 +36,7 @@ router.post('/updateCard', (req, res, next) => {
 });
 
 router.post('/addCard', async(req, res, next) => {
-    req.body.writer = userID;
+    req.body.writer = userID ? userID : "anonymous";
     let card = await board.addCard(req.body);
     res.send(card);
 });

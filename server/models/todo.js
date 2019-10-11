@@ -35,17 +35,14 @@ class Todo{
     }
    
     async getTodoList(userId){
-        let [rows] = await pool.query(todo.getList,[userId]);
-        if (rows.length === 0){
-            [rows] = await pool.query(todo.getEmptyList,[userId]);
-            return this.makeBoardList(true,rows);
-        }else{
-            return this.makeBoardList(false,rows);
-        }
+        let [rows] = await pool.query(todo.getEmptyList,[userId]);
+        let boardList = this.makeBoardList(true,rows);
+
+        [rows] = await pool.query(todo.getList,[userId]);
+        return this.makeBoardList(false,rows,boardList);
     }
 
-    makeBoardList(isEmptyColumn,rows){
-        let boardList = {};
+    makeBoardList(isEmptyColumn,rows,boardList = {}){
         rows.forEach(elem => {
             if(boardList[elem.LIST_ID] == undefined){
                 boardList[elem.LIST_ID] = {
