@@ -15,18 +15,22 @@ class board extends observable{
     }
 
     dragEventListener(){
-        const cardList = $$(".card");
+        const cardList = $$(".card")
         const columnList = $$(".column");
         let targetID;
 
         cardList.forEach(card => {
             card.addEventListener("dragstart", (event) => {
-                targetID = this.dragStartEvent(event);
+                event.dataTransfer.setData("text/plain",this.dragStartEvent(event));
+                // console.log(`dragstart:${event.target.id}`);
+                // targetID = this.dragStartEvent(event);
             });
+        });
 
-            document.addEventListener("dragenter", (event) => {
-                this.dragEnterEvent(event,targetID);
-            });
+        document.addEventListener("dragenter", (event) => {
+            targetID = event.dataTransfer.getData("text");
+            console.log(targetID);
+            this.dragEnterEvent(event,targetID);
         });
 
         columnList.forEach(column => {
@@ -35,6 +39,8 @@ class board extends observable{
             });
         
             column.addEventListener("drop", (event) => {
+                targetID = event.dataTransfer.getData("text");
+                console.log(`drop:${targetID}`);
                 this.dropEvent(event,column,targetID);
             });
         });
@@ -49,10 +55,8 @@ class board extends observable{
     dragEnterEvent(event,targetID){
         if( event.target.className == "column" ) {
             event.target.insertAdjacentElement('beforeend', $(`#${targetID}`)); 
-            return;
         }else if( event.target.className == "card" ){
             event.target.insertAdjacentElement('beforebegin', $(`#${targetID}`));
-            return;
         }
     }
 

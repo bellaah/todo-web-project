@@ -1,11 +1,13 @@
 import Card from './card.js';
 import observable from '../src/observable.js';
+import Board from './board.js';
 import {$,$$,findInParentX2,findInParent} from '../src/util.js';
 
 class column extends observable{
     constructor(){
         super();
         this.card = new Card();
+        this.board = new Board();
     }
 
     async update(type,data){
@@ -14,7 +16,13 @@ class column extends observable{
             let cardHtml = await this.card.render(data);
             const count = curColumn.querySelector(".card-count-btn");
             count.innerText = parseInt(count.innerText)+1;
-            curColumn.insertAdjacentHTML('beforeend',cardHtml);
+            await curColumn.insertAdjacentHTML('beforeend',cardHtml);
+            // this.board.dragEventListener([$(`#card-${data.CARD_ID}`)]);
+            $(`#card-${data.CARD_ID}`).addEventListener("dragstart", (event) => {
+                event.dataTransfer.setData("text/plain", event.target.id);
+                event.target.classList.add("disable");
+                event.dataTransfer.dropEffect = "copy";
+            });
         }
     }
 
